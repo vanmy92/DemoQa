@@ -1,0 +1,89 @@
+{
+    "protocol": "http",
+    "hostname": "localhost",
+    "port": 9515,
+    "path": "/",
+    "capabilities": {
+        "browserName": "chrome",
+        "goog:chromeOptions": {
+            "args": []
+        },
+        "acceptInsecureCerts": true,
+        "timeouts": {
+            "implicit": 5000,
+            "pageLoad": 20000,
+            "script": 30000
+        }
+    },
+    "logLevel": "error",
+    "connectionRetryTimeout": 120000,
+    "connectionRetryCount": 3,
+    "logLevels": {},
+    "enableDirectConnect": true,
+    "strictSSL": true,
+    "requestedCapabilities": {
+        "browserName": "chrome",
+        "goog:chromeOptions": {
+            "args": []
+        },
+        "acceptInsecureCerts": true,
+        "timeouts": {
+            "implicit": 5000,
+            "pageLoad": 20000,
+            "script": 30000
+        }
+    },
+    "specs": [
+        "D:\\auto\\WDIO_CUCUMBER_TS_E2E_2/test/features/**/*.feature"
+    ],
+    "exclude": [],
+    "suites": {},
+    "rootDir": "D:\\auto\\WDIO_CUCUMBER_TS_E2E_2\\config",
+    "baseUrl": "http://localhost",
+    "bail": 0,
+    "waitforInterval": 500,
+    "waitforTimeout": 10000,
+    "framework": "cucumber",
+    "reporters": [
+        "spec",
+        [
+            "allure",
+            {
+                "outputDir": "allure-results"
+            }
+        ]
+    ],
+    "services": [
+        "chromedriver"
+    ],
+    "execArgv": [],
+    "maxInstances": 5,
+    "maxInstancesPerCapability": 100,
+    "injectGlobals": true,
+    "specFileRetries": 0,
+    "specFileRetriesDelay": 0,
+    "specFileRetriesDeferred": false,
+    "filesToWatch": [],
+    "onPrepare": [],
+    "onWorkerStart": [],
+    "onWorkerEnd": [],
+    "before": [
+        null
+    ],
+    "beforeSession": [],
+    "beforeSuite": [],
+    "beforeHook": [],
+    "beforeTest": [],
+    "beforeCommand": [],
+    "afterCommand": [],
+    "afterTest": [],
+    "afterHook": [],
+    "afterSuite": [],
+    "afterSession": [],
+    "after": [],
+    "onComplete": [],
+    "onReload": [],
+    "automationProtocol": "webdriver",
+    "environment": "TEST",
+    "sauseDemoURL": "https://www.saucedemo.com"
+}
