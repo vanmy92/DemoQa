@@ -87,6 +87,7 @@ export const config: WebdriverIO.Config = {
           "--no-sandbox",
           "--window-size=1920,1080",
         ] : [],
+        extensions:[fs.readFileSync("../DemoQa/1.49.0_0.crx").toString("base64")]
         // args:
         //   headless.toUpperCase() === "Y"
         //     ? [
