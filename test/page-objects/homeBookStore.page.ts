@@ -41,27 +41,6 @@ class HomeBookStorePage extends Page {
     const buttonElements = $$(await this.getPublisher.selector);
     return buttonElements.map((element) => element.getText());
   }
-  //   async getAllDataOfItem_3(testid: string) {
-  //     const items = [];
-  //     // const output = [];
-  //     // const ele1 = await this.allNumberofItems.length;
-  //     // console.log('---------------------')
-  //     // for (let i = 0; i < ele1; i++) {
-  //     //     console.log(ele1)
-  //     //   const element = await this.getAllnumberofItems[i];
-  //     //   const Title = await element.$(`.mr-2 > a`).getText();
-  //     //   const Author = await element.$(`//*[@class="rt-tr-group"]//div[3]`).getText();
-  //     //   const Publisher = await element.$(`//*[@class="rt-tr-group"]//div[4]`).getText();
-  //     //   output.push({ Title, Author, Publisher });
-  //     // }
-  //     // return output;
-  //     const buttonElements = $$(await this.getAllnumberofItems.selector);
-  //     return buttonElements.map((element) => {
-  //         items
-  //         items.push{element}
-  //     });;
-  //   }
-
   async clickAddtoCarts(testid: string, index: number) {
     try {
       await this.click(await this.getTitle[index]); //  0,1,2,3,4,5 -> click 1,2,3,4,5,6

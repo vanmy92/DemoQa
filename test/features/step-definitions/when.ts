@@ -14,9 +14,15 @@ When(/^User clicks on (.*) to view the details of the the book$/, async function
   console.log(`==========`)
   console.log(`----------   user clicks on ${nameOfBook} to view the details of the book`);
   await homeBookStorePage.clickOnceItemAddToCartByTitleName(this.testid, nameOfBook);
-
   await browser.debug()
 });
+
+When(/^User clicks on Login button$/, async function () {
+  await homeBookStorePage.clickLogin();
+});
+
+
+
 
 
 
