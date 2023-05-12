@@ -8,7 +8,7 @@ let payload = {
     password: "pistol"
 }
 
-async function GET(testid:string, baseUrl: string, endpoint: string, authToken:string,queryParams: Object,) {
+async function GET(testid:string, baseUrl: string, endpoint: string, authToken:string,) {
     if(!baseUrl || !endpoint){
         throw Error(`One of the given values baseUrl: ${baseUrl}, endpoint: ${endpoint} is not valid `)
     }
@@ -18,7 +18,7 @@ async function GET(testid:string, baseUrl: string, endpoint: string, authToken:s
     try {
         return await request(baseUrl)
         .get(endpoint)
-        .query(queryParams)
+        // .query(queryParams)
         .auth(authToken, {type: 'bearer'})
         .set("Content-Type","application/json")
         .set("Accept", "application/json")

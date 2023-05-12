@@ -286,7 +286,7 @@ export const config: WebdriverIO.Config = {
   before: function (capabilities, specs) {
     browser.options["environment"] = config.environment;
     browser.options["sauseDemoURL"] = config.sauseDemoURL;
-    // browser.options["reqresBaseURL"] = config.reqresBaseURL;
+    browser.options["bookStoreBaseURL"] = config.bookStoreBaseURL;
     // browser.options["nopeCommerceBaseURL"] = config.nopeCommerceBaseURL;
   },
   /**

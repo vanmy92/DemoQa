@@ -1,6 +1,7 @@
 import { Options } from "@wdio/types";
 import chai from "chai";
 import Page from "./page";
+import bookDetailsPage from "./bookDetails.page";
 
 class HomeBookStorePage extends Page {
   constructor() {
@@ -28,7 +29,20 @@ class HomeBookStorePage extends Page {
   async nameHeader() {
     return this.getNameHeader;
   }
-
+  get getUserNameLabel() {
+    return $('#userName-label').getText();
+  }
+  get getUserNameValue() {
+    return $('#userName-value').getText()
+  }
+  async getUserNameShow() {
+    let label = await this.getUserNameLabel;
+    let name = await this.getUserNameValue;
+    return await label + name; 
+  }
+  async getUserName(){
+    return await this.getUserNameValue
+  }
   async listTitle(testid: string) {
     const buttonElements = $$(await this.getTitle.selector);
     return buttonElements.map((element) => element.getText());
@@ -61,7 +75,14 @@ class HomeBookStorePage extends Page {
       }
     }
   }
+
+  
    
+
+
+
+
+
   async getAllDataOfItem_2(testid: string) {
     const items = [];
 

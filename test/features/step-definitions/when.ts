@@ -2,6 +2,13 @@ import { When } from "@wdio/cucumber-framework";
 import chai = require("chai");
 import homePage from "../../page-objects/home.page";
 import homeBookStorePage from "../../page-objects/homeBookStore.page";
+import bookDetailsPage from "../../page-objects/bookDetails.page";
+import reporter from "../../helper/reporter";
+import apiHelper from "../../helper/apiHelper";
+import fs from "fs";
+import loginPage from "../../page-objects/login.page";
+import profilePage from "../../page-objects/profile.Page";
+
 
 When(/^User clicks on Book Store Application Button$/, async function () {
   await homePage.clickBookStoreApp()
@@ -14,13 +21,159 @@ When(/^User clicks on (.*) to view the details of the the book$/, async function
   console.log(`==========`)
   console.log(`----------   user clicks on ${nameOfBook} to view the details of the book`);
   await homeBookStorePage.clickOnceItemAddToCartByTitleName(this.testid, nameOfBook);
+  // await browser.debug()
+});
+
+
+
+When(
+  /^User clicks on Login button in Book Store Page$/,
+  async function (dataTable) {
+
+    await homeBookStorePage.clickLogin();
+
+    try {
+      reporter.addStep(this.testid, "info", "login to saucedemo ... ")
+      let dt = dataTable.hashes();
+      //@ts-ignore
+      // await loginPage.navigateTo(browser.options.sauseDemoURL);
+      await loginPage.loginToBookStoreApp(
+        this.testid,
+        process.env.TEST_STD_USERNAME,
+        process.env.TEST_STD_PASSWORD
+      );
+    } catch (err) {
+      err.message = `Failed to login to saucedemo: ${err.message}`;
+      throw err
+    }
+    await browser.pause(1000)
+    await homeBookStorePage.clickLogin();
+    // await browser.debug()
+  }
+);
+
+
+
+When(/^Verify get the value of the (.*) book by call api$/, async function (nameOfBook) {
+  let idBook =await bookDetailsPage.getIdBookAfterClickBook(this.testid,nameOfBook)
+  console.log(`----------------------------book id:`)
+  console.log(idBook)
+
+
+  // if(!endpointRef) throw new Error(`Given endpoint ref: ${endpointRef} is not valid`);
+  
+  try {
+    // get payload data
+    let testid= this.testid
+    // reporter.addStep(testid, "info",`Getting the payload data from endpoint: ${endpointRef}`) 
+    // let endpoint =""
+    // if(endpointRef.trim().toUpperCase() ==="USERS"){
+    //    endpoint = constants.REQRES.GET_USERS
+    // } 
+    // if(!endpoint) throw new Error(`Error getting endpoint: ${endpointRef} from the constants.json`)
+    // // make get call by using API helper
+  
+    let endpoint = idBook
+    
+    let req
+    await browser.call(async function () {
+      //@ts-ignore
+      req =await apiHelper.GET(testid, browser.options.bookStoreBaseURL, endpoint, "")
+    })
+    // @ts-ignore
+    // if(req.status !== 200) chai.expect.fail(`Failed getting  users from : ${browser.options.bookStoreBaseURL}/${endpoint}`)
+    // reporter.addStep(this.testid, "debug",`Api response received, data: ${JSON.stringify(req.body)}`) 
+  
+    // store results
+    let data = JSON.stringify(req.body)
+    let filename= `${process.cwd()}/data/api-res/requestAPIUsers.json`
+    fs.writeFileSync(filename, data)
+    reporter.addStep(testid, "info",`Api response from book id: ${endpoint} stored in  json file`) 
+  } catch (err) {
+      err.message = `${this.testid}: Failed at getting API users from reqres ${err.message}`
+      throw err
+  }
+
+  console.log(`--------------------------`)
+        let filename= `${process.cwd()}/data/api-res/requestAPIUsers.json`
+        let data =  fs.readFileSync(filename, "utf8")
+        let dataObj= JSON.parse(data)
+        console.log(`Api data:${data}`)
+
+});
+
+
+
+When(/^Verify get all the value of the book by call api$/, async function () {
+  console.log(`----------------------------`)
+
+
+  // if(!endpointRef) throw new Error(`Given endpoint ref: ${endpointRef} is not valid`);
+  
+  try {
+    // get payload data
+    let testid= this.testid
+    // reporter.addStep(testid, "info",`Getting the payload data from endpoint: ${endpointRef}`) 
+    // let endpoint =""
+    // if(endpointRef.trim().toUpperCase() ==="USERS"){
+    //    endpoint = constants.REQRES.GET_USERS
+    // } 
+    // if(!endpoint) throw new Error(`Error getting endpoint: ${endpointRef} from the constants.json`)
+    // // make get call by using API helper
+  
+    let endpoint
+    
+    let req
+    await browser.call(async function () {
+      //@ts-ignore
+      let booknumber = 1213131
+      let url = browser.options.bookStoreBaseURL + "?ISBN=" + booknumber;
+      req =await apiHelper.GET(testid, url , endpoint, "")
+    })
+    // @ts-ignore
+    // if(req.status !== 200) chai.expect.fail(`Failed getting  users from : ${browser.options.bookStoreBaseURL}/${endpoint}`)
+    // reporter.addStep(this.testid, "debug",`Api response received, data: ${JSON.stringify(req.body)}`) 
+  
+    // store results
+    let data = JSON.stringify(req.body)
+    let filename= `${process.cwd()}/data/api-res/requestAPIUsers.json`
+    fs.writeFileSync(filename, data)
+    reporter.addStep(testid, "info",`Api response from book id: ${endpoint} stored in  json file`) 
+  } catch (err) {
+      err.message = `${this.testid}: Failed at getting API users from reqres ${err.message}`
+      throw err
+  }
+
+  console.log(`--------------------------`)
+        let filename= `${process.cwd()}/data/api-res/requestAPIUsers.json`
+        let data =  fs.readFileSync(filename, "utf8")
+        let dataObj= JSON.parse(data)
+        console.log(`Api data:${data}`)
+
+});
+
+
+When(/^User clicks on Add to Your Collection button$/, async function(){
+
+  await bookDetailsPage.clickAddToYourCollection()
+  await browser.pause(1000)
+  console.log(`----------------------`)
+  console.log(`-----------User clicks Add To Your Collection----------`)
+  let textPopup =  await bookDetailsPage.acceptPopupAddBook()
+  console.log(textPopup)
   await browser.debug()
-});
 
-When(/^User clicks on Login button$/, async function () {
-  await homeBookStorePage.clickLogin();
-});
+})
 
+When(/^User clicks on Back To Book Store button$/, async function(){
+  await bookDetailsPage.clickBackToBookStoreAfterLogin()
+  await browser.debug()
+})
+
+When(/^User clicks on Profile button$/, async function(){
+  await profilePage.clickProfileButton()
+  await browser.debug()
+})
 
 
 

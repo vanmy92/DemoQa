@@ -1,6 +1,7 @@
 import { Options } from "@wdio/types";
 import chai from "chai";
 import Page from "./page";
+
 class BookDetails extends Page {
   constructor() {
     super();
@@ -9,8 +10,7 @@ class BookDetails extends Page {
   get getBookStoreHeader() {
     return $(".main-header").getText();
   }
-  
-  
+
   get getTitle() {
     return $(`#title-label`);
   }
@@ -26,33 +26,77 @@ class BookDetails extends Page {
   get getTotalPages() {
     return $(`#pages-label`);
   }
-  get getDescription () {
+  get getDescription() {
     return $(`#description-label`);
   }
   get getWebsite() {
     return $(`#website-label`);
   }
-  
+
   get getLoginBtn() {
     return $(`#login`);
   }
-  get getBackTOBookStoreBtn() {
+  get getBackTOBookStoreBtnBeforeLogin() {
     return $(`#addNewRecordButton`);
+  }
+  get getBackTOBookStoreBtnAfterLogin() {
+    return $('//*[contains(text(),"Back To Book Store")]');
+  }
+  
+  get getAddToYourCollection() {
+    return $('//*[contains(text(),"Add To Your Collection")]');
   }
 
   get getAllValueInEachItem() {
     return $$(`#userName-value`);
   }
 
-  async clickBackToBookStore() {
-    await this.click(await this.getBackTOBookStoreBtn);
+  async clickBackToBookStoreBeforeLogin() {
+    await this.click(await this.getBackTOBookStoreBtnBeforeLogin);
   }
- 
+  async clickBackToBookStoreAfterLogin() {
+    await this.click(await this.getBackTOBookStoreBtnAfterLogin);
+  }
+  async clickAddToYourCollection() {
+    await this.click(await this.getAddToYourCollection);
+  }
   async clickLogin() {
     await this.click(await this.getLoginBtn);
   }
   async nameBookStoreHeader() {
     return this.getBookStoreHeader;
+  }
+
+  async acceptPopupAddBook() {
+  
+    let isAlertPopup = await browser.isAlertOpen();
+    let text
+    if (isAlertPopup) {
+      let alertTxt = await browser.getAlertText();
+      text = alertTxt
+      console.log(`--------Text in the alert: ${alertTxt}`);
+      //Book added to your collection.
+      await browser.acceptAlert();
+      // return alertTxt
+    }
+    
+  }
+
+  async acceptPopupAddBookAgain() {
+    browser.setWindowSize(3000, 1080)
+    await browser.pause(1000)
+
+    let isAlertPopup = await browser.isAlertOpen();
+    let text
+    if (isAlertPopup) {
+      let alertTxt = await browser.getAlertText();
+      text = alertTxt
+      // console.log(`--------Text in the alert: ${alertTxt}`);
+      // Book already present in the your collection!
+      await browser.acceptAlert();
+      return alertTxt
+    }
+    
   }
 
   async listAllValue(testid: string) {
@@ -62,50 +106,46 @@ class BookDetails extends Page {
   get getISBN() {
     return $(`#ISBN-label`);
   }
-  get lengthItems(){
-    return $$(`//*[@class="mt-2 row"]`)
-  }
-  async getAllData(testid:string) {
-    let ISBN = await this.getISBN.getText()
-    ISBN = ISBN.replace(' :', '')
-    let Title = await this.getTitle.getText()
-    Title = Title.replace(' :', '')
-    let Sub_Title = await this.getSubTitle.getText()
-    Sub_Title = Sub_Title.replace(' :', '')
-    let Author = await this.getAuthor.getText()
-    Author = Author.replace(' :', '')
-    let Publisher = await this.getPublisher.getText()
-    Publisher = Publisher.replace(' :', '')
-    let Total_Pages = await this.getTotalPages.getText()
-    Total_Pages = Total_Pages.replace(' :', '')
-    let Description = await this.getDescription.getText()
-    Description = Description.replace(' :', '')
-    let Website  = await this.getWebsite.getText() 
-    Website = Website.replace(' :', '')
-    let output = await this.listAllValue(testid)
-    
-    let leng = await this.lengthItems.length
-    let arr = [
-      {[ISBN]: output[0]},
-      {[Title]: output[1]},
-      {[Sub_Title]: output[2]},
-      {[Author]: output[3]},
-      {[Publisher]: output[4]},
-      {[Total_Pages]: output[5]},
-      {[Description]: output[6]},
-      {[Website]: output[7]},
-    ]
-    return arr
-    
-
-
+  get lengthItems() {
+    return $$(`//*[@class="mt-2 row"]`);
   }
 
-  async  logJSONData() {
-    
-}
+  async getAllData(testid: string) {
+    let output = await this.listAllValue(testid);
+    let leng = await this.lengthItems.length;
+    let [
+      isbn,
+      title,
+      subTitle,
+      author,
+      publisher,
+      pages,
+      description,
+      website,
+    ] = output;
+    const arr = {
+      isbn,
+      title,
+      subTitle,
+      author,
+      publisher,
+      pages: parseInt(pages),
+      description,
+      website,
+    };
+    return arr;
+  }
 
- 
+  async logJSONData() {}
+
+  async getIdBookAfterClickBook(testid: string, nameOfBook: string) {
+    let id;
+    let alldata = await this.getAllData(testid);
+    if (nameOfBook === (await alldata.title)) {
+      id = await alldata.isbn;
+    }
+    return id;
+  }
 
   // async listAuthort(testid: string) {
   //   const buttonElements = $$(await this.getAuthor.selector);
@@ -135,7 +175,7 @@ class BookDetails extends Page {
   //     }
   //   }
   // }
-   
+
   // async getAllDataOfItem_2(testid: string) {
   //   const items = [];
 
@@ -218,7 +258,6 @@ class BookDetails extends Page {
   //   return output;
   // }
 
-
   // get divElements() { return $$('div.rt-td'); }
 
   // async getDivData(testid: string) {
@@ -231,12 +270,9 @@ class BookDetails extends Page {
   //     const publisher = await this.divElements[i + 3].getText();
   //     dataArray.push({ name, title, publisher });
   //   }
-    
+
   //   return dataArray;
   // }
-
-
-
 }
 
 export default new BookDetails();
