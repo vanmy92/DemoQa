@@ -4,7 +4,13 @@ export const config = Object.assign(baseConfig, {
   environment: "TEST",
   sauseDemoURL: "https://www.saucedemo.com",
   // bookStoreBaseURL: "https://demoqa.com/BookStore/v1/Book?ISBN=",
-  bookStoreBaseURL: "https://demoqa.com/BookStore/v1/Books",
+  bookStoreBaseURL: "https://demoqa.com/BookStore/v1/Book",
+  getGenerateToken: "https://demoqa.com/Account/v1/",
+  getUser: "https://demoqa.com/Account/v1/User/",
+
+
+  
+  postUser: "https://demoqa.com/Account/v1/User",
 
   // 'https://demoqa.com/BookStore/v1/Books' 
   nopeCommerceBaseURL: "https://admin-demo.nopcommerce.com",

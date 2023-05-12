@@ -287,6 +287,15 @@ export const config: WebdriverIO.Config = {
     browser.options["environment"] = config.environment;
     browser.options["sauseDemoURL"] = config.sauseDemoURL;
     browser.options["bookStoreBaseURL"] = config.bookStoreBaseURL;
+    browser.options["getGenerateToken"] = config.getGenerateToken;
+    browser.options["getUser"] = config.getUser;
+    browser.options["postUser"] = config.postUser;
+
+    
+
+    
+
+    
     // browser.options["nopeCommerceBaseURL"] = config.nopeCommerceBaseURL;
   },
   /**

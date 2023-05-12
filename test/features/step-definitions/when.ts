@@ -8,6 +8,10 @@ import apiHelper from "../../helper/apiHelper";
 import fs from "fs";
 import loginPage from "../../page-objects/login.page";
 import profilePage from "../../page-objects/profile.Page";
+import userPass from "../../../data/userPass.json"
+import generateToken from "../../../data/api-res/GenerateTokenAPIByPost.json"
+import responseBodyReturn from "../../../data/api-res/ResponseBodyReturn.json"
+// assert { type: "json" };
 
 
 When(/^User clicks on Book Store Application Button$/, async function () {
@@ -65,13 +69,6 @@ When(/^Verify get the value of the (.*) book by call api$/, async function (name
   try {
     // get payload data
     let testid= this.testid
-    // reporter.addStep(testid, "info",`Getting the payload data from endpoint: ${endpointRef}`) 
-    // let endpoint =""
-    // if(endpointRef.trim().toUpperCase() ==="USERS"){
-    //    endpoint = constants.REQRES.GET_USERS
-    // } 
-    // if(!endpoint) throw new Error(`Error getting endpoint: ${endpointRef} from the constants.json`)
-    // // make get call by using API helper
   
     let endpoint = idBook
     
@@ -80,10 +77,7 @@ When(/^Verify get the value of the (.*) book by call api$/, async function (name
       //@ts-ignore
       req =await apiHelper.GET(testid, browser.options.bookStoreBaseURL, endpoint, "")
     })
-    // @ts-ignore
-    // if(req.status !== 200) chai.expect.fail(`Failed getting  users from : ${browser.options.bookStoreBaseURL}/${endpoint}`)
-    // reporter.addStep(this.testid, "debug",`Api response received, data: ${JSON.stringify(req.body)}`) 
-  
+
     // store results
     let data = JSON.stringify(req.body)
     let filename= `${process.cwd()}/data/api-res/requestAPIUsers.json`
@@ -108,33 +102,22 @@ When(/^Verify get all the value of the book by call api$/, async function () {
   console.log(`----------------------------`)
 
 
-  // if(!endpointRef) throw new Error(`Given endpoint ref: ${endpointRef} is not valid`);
   
   try {
     // get payload data
     let testid= this.testid
-    // reporter.addStep(testid, "info",`Getting the payload data from endpoint: ${endpointRef}`) 
-    // let endpoint =""
-    // if(endpointRef.trim().toUpperCase() ==="USERS"){
-    //    endpoint = constants.REQRES.GET_USERS
-    // } 
-    // if(!endpoint) throw new Error(`Error getting endpoint: ${endpointRef} from the constants.json`)
-    // // make get call by using API helper
-  
+   
     let endpoint
     
     let req
     await browser.call(async function () {
+      let number
       //@ts-ignore
-      let booknumber = 1213131
-      let url = browser.options.bookStoreBaseURL + "?ISBN=" + booknumber;
-      req =await apiHelper.GET(testid, url , endpoint, "")
+      let url = browser.options.bookStoreBaseURL + "?ISBN=" + number
+      //@ts-ignore
+      req =await apiHelper.GET(testid, browser.options.bookStoreBaseURL, endpoint, "")
     })
-    // @ts-ignore
-    // if(req.status !== 200) chai.expect.fail(`Failed getting  users from : ${browser.options.bookStoreBaseURL}/${endpoint}`)
-    // reporter.addStep(this.testid, "debug",`Api response received, data: ${JSON.stringify(req.body)}`) 
-  
-    // store results
+   
     let data = JSON.stringify(req.body)
     let filename= `${process.cwd()}/data/api-res/requestAPIUsers.json`
     fs.writeFileSync(filename, data)
@@ -151,6 +134,102 @@ When(/^Verify get all the value of the book by call api$/, async function () {
         console.log(`Api data:${data}`)
 
 });
+
+
+
+When(/^Get the GenerateToken user is logged in$/, async function () {
+  console.log(`----------------------------`)  
+  let req
+  try {
+    let testid= this.testid
+    let endpoint
+
+    await browser.call(async function () {
+      let endpoint ="GenerateToken"
+      //@ts-ignore
+      req =await apiHelper.POST(testid, browser.options.getGenerateToken, endpoint, userPass )
+    })
+  } catch (err) {
+      err.message = `${this.testid}: Failed at getting API users from reqres ${err.message}`
+      throw err
+  }
+  console.log(req)
+  
+  await browser.debug()
+
+});
+
+When(/^Get all information of user by the GenerateToken$/, async function(){
+
+  let filename= `${process.cwd()}/data/api-res/GenerateTokenAPIByPost.json`
+  let data =  fs.readFileSync(filename, "utf8")
+  const jsonData = JSON.parse(data);
+  console.log(`Api data:${data}`)
+  const token = jsonData.token;
+  console.log(token);
+  try {
+    let testid= this.testid
+    
+    let endpoint 
+    
+    let req
+    await browser.call(async function () {
+      //@ts-ignore
+      req =await apiHelper.GET(testid, browser.options.bookStoreBaseURL, endpoint, "")
+    })
+    // @ts-ignore
+    // if(req.status !== 200) chai.expect.fail(`Failed getting  users from : ${browser.options.bookStoreBaseURL}/${endpoint}`)
+    // reporter.addStep(this.testid, "debug",`Api response received, data: ${JSON.stringify(req.body)}`) 
+  
+    // store results
+    let data = JSON.stringify(req.body)
+    let filename= `${process.cwd()}/data/api-res/requestAPIUsers.json`
+    fs.writeFileSync(filename, data)
+    reporter.addStep(testid, "info",`Api response from book id: ${endpoint} stored in  json file`) 
+  } catch (err) {
+      err.message = `${this.testid}: Failed at getting API users from reqres ${err.message}`
+      throw err
+  }
+
+
+
+
+  await browser.debug()
+
+})
+
+
+
+
+When(/^User creates a valid account using API$/, async function () {
+  console.log(`----------------------------`)  
+  let req
+  try {
+    let testid= this.testid
+    await browser.call(async function () {
+      let endpoint = ""
+      //@ts-ignore
+      req =await apiHelper.POST(testid, browser.options.postUser, endpoint, userPass )
+
+        // Extract the response body from the req object
+  
+
+    })
+  } catch (err) {
+      err.message = `${this.testid}: Failed at getting API users from reqres ${err.message}`
+      throw err
+  }
+  // await browser.pause(5000)
+  // await browser.acceptAlert();
+  console.log(`----------------------------`)  
+  const data = req;
+  let filename= `${process.cwd()}/data/api-res/ResponseBodyReturn.json`
+  fs.writeFileSync(filename, data)
+   
+  await browser.debug()
+
+});
+
 
 
 When(/^User clicks on Add to Your Collection button$/, async function(){
@@ -173,6 +252,49 @@ When(/^User clicks on Back To Book Store button$/, async function(){
 When(/^User clicks on Profile button$/, async function(){
   await profilePage.clickProfileButton()
   await browser.debug()
+})
+When(/^User clicks on New User Button$/, async function(){
+  await loginPage.clickNewUser()
+  await browser.debug()
+})
+
+When(/^User wants to delete the accountI$/, async function(){
+
+  let token = await generateToken.token
+  let userId = await responseBodyReturn.userID
+
+
+// if(!endpointRef) throw new Error(`Given endpoint ref: ${endpointRef} is not valid`);
+
+try {
+  // get payload data
+  let testid= this.testid
+  let endpoint = userId
+  
+  let req
+  await browser.call(async function () {
+    //@ts-ignore
+    req =await apiHelper.GET(testid, browser.options.getUser, endpoint, token)
+  })
+
+  // store results
+  // let data = JSON.stringify(req.body)
+  // let filename= `${process.cwd()}/data/api-res/requestAPIUsers.json`
+  // fs.writeFileSync(filename, data)
+  reporter.addStep(testid, "info",`User login with userId: ${userId} stored in json file`) 
+} catch (err) {
+    err.message = `${this.testid}: Failed login with the userId getting API users from jsonfile ${err.message}`
+    throw err
+}
+
+//   console.log(`--------------------------`)
+//         let filename= `${process.cwd()}/data/api-res/requestAPIUsers.json`
+//         let data =  fs.readFileSync(filename, "utf8")
+//         let dataObj= JSON.parse(data)
+//         console.log(`Api data:${data}`)
+
+ 
+   await browser.debug()
 })
 
 

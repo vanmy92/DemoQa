@@ -61,7 +61,6 @@ class HomeBookStorePage extends Page {
     await browser.pause(2000)
     await this.clickRegister
     await browser.pause(2000)
-
   }
 
   

@@ -1,5 +1,5 @@
 import report from "supertest"
-
+import fs from "fs";
 import request from "supertest"
 import reporter from "../helper/reporter"
 
@@ -28,28 +28,55 @@ async function GET(testid:string, baseUrl: string, endpoint: string, authToken:s
 }
 
 
-async function POST(testid:string, baseUrl: string, endpoint: string, authToken:string,payload: Object,) {
-    if(!baseUrl || !endpoint){
+async function POST(testid:string, baseUrl: string, endpoint: string,data: object) {
+    if(!baseUrl){
         throw new Error(`One of the given values baseUrl: ${baseUrl}, endpoint: ${endpoint} is not valid `)
     }
     baseUrl = baseUrl.trim()
-    endpoint = endpoint.trim()  
+    // endpoint = endpoint.trim()  
     reporter.addStep(testid, "info", `making a POST to ${endpoint}`)
     try {
        let res = await request(baseUrl)
         .post(endpoint)
-        
-        .auth(authToken, {type: 'bearer'})
+        .set("accept", "application/json")
         .set("Content-Type","application/json")
-        .set("Accept", "application/json")
-        .send(payload)
+        .send(data)
+        // console.log(`----5-123---`)
         console.log(`-----------Res: ${JSON.stringify(res.body)}`)
+        return JSON.stringify(res.body)
+     
+        console.log(`----6-1234---`)
     } catch (err) {
         err.message = `error making a POST call to ${endpoint}, ${err}`
     }
+  
 }
 
-export default {GET, POST}
+async function DELETE(testid:string, baseUrl: string, endpoint: string,data: object) {
+    if(!baseUrl){
+        throw new Error(`One of the given values baseUrl: ${baseUrl}, endpoint: ${endpoint} is not valid `)
+    }
+    baseUrl = baseUrl.trim()
+    // endpoint = endpoint.trim()  
+    reporter.addStep(testid, "info", `making a POST to ${endpoint}`)
+    try {
+       let res = await request(baseUrl)
+        .post(endpoint)
+        .set("accept", "application/json")
+        .set("Content-Type","application/json")
+        .send(data)
+        // console.log(`----5-123---`)
+        console.log(`-----------Res: ${JSON.stringify(res.body)}`)
+        return JSON.stringify(res.body)
+     
+        console.log(`----6-1234---`)
+    } catch (err) {
+        err.message = `error making a POST call to ${endpoint}, ${err}`
+    }
+  
+}
+
+export default {GET, POST, DELETE}
 
 
 /* 
