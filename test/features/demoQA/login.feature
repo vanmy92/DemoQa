@@ -1,16 +1,35 @@
 Feature: Inventory
 
-    @demo @smoke @debug
-    Scenario Outline: <TestID>: Demo Inventory
-        # Given Login to inventory web app
-        Given As a standard user I login to demoqa web app
-        And User clicks on Book Store Application Button
+    # @demo @smoke @debug
+    # Scenario Outline: <TestID>: Check an account with API, Get, Delete, Post
+    #     # Given Login to inventory web app
+    #     Given As a standard user I login to demoqa web app
+    #     And User clicks on Book Store Application Button
+    #     And User creates a valid account using API
+    #     And Get the GenerateToken user is logged in
+    #     Then Verify that user is logged in with call the UserId and GenerateToken using API
+    #     And User wants to delete the account using Api
+    #     Then Check the user was deleted using APi
+
+        
+
+
+
+
+
+
+# @demo @smoke @debug
+    # Scenario Outline: <TestID>: Check an account in UI
+    #     # Given Login to inventory web app
+    #     Given As a standard user I login to demoqa web app
+    #     And User clicks on Book Store Application Button
+    #     And User creates a valid account using API
+    #     And Get the GenerateToken user is logged in
+    #     Then Verify that user is logged in with call the UserId and GenerateToken using API
+    #     And User wants to delete the account using Api
+    #     Then Check the user was deleted using APi
+
         # And User clicks on New User Button
-        And User creates a valid account using API
-        And Get the GenerateToken user is logged in
-        Then Verify that user is logged in with call the UserId and GenerateToken using API
-        And User wants to delete the account
-       
         # And Get all information of user by the GenerateToken
         # And User clicks on Login button in Book Store Page
         #     | UserType | Username |

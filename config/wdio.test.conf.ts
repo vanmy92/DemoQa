@@ -7,8 +7,8 @@ export const config = Object.assign(baseConfig, {
   bookStoreBaseURL: "https://demoqa.com/BookStore/v1/Book",
   getGenerateToken: "https://demoqa.com/Account/v1/",
   getUser: "https://demoqa.com/Account/v1/User/",
-
-
+  getAllBooks: "https://demoqa.com/BookStore/v1/Books",
+  getBook :  "https://demoqa.com/BookStore/v1/Book?ISBN=",
   
   postUser: "https://demoqa.com/Account/v1/User",
 

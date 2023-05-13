@@ -9,8 +9,9 @@ import fs from "fs";
 import loginPage from "../../page-objects/login.page";
 import profilePage from "../../page-objects/profile.Page";
 import userPass from "../../../data/userPass.json"
-import generateToken from "../../../data/api-res/GenerateTokenAPIByPost.json"
-import responseBodyReturn from "../../../data/api-res/ResponseBodyReturn.json"
+import generateToken from "../../../data/api-res/Account/GenerateTokenAPIByPost.json"
+import responseBodyReturn from "../../../data/api-res/Account/ResponseBodyReturn.json"
+import { profile } from "winston";
 // assert { type: "json" };
 
 
@@ -52,6 +53,8 @@ When(
     }
     await browser.pause(1000)
     await homeBookStorePage.clickLogin();
+    await browser.pause(3000)
+
     // await browser.debug()
   }
 );
@@ -72,6 +75,7 @@ When(/^Verify get the value of the (.*) book by call api$/, async function (name
   
     let endpoint = idBook
     
+
     let req
     await browser.call(async function () {
       //@ts-ignore
@@ -153,15 +157,17 @@ When(/^Get the GenerateToken user is logged in$/, async function () {
       err.message = `${this.testid}: Failed at getting API users from reqres ${err.message}`
       throw err
   }
+  console.log(`Get the GenerateToken user is logged in`)
   console.log(req)
-  
-  await browser.debug()
+
+  await browser.pause(3000)
+  // await browser.debug()
 
 });
 
 When(/^Get all information of user by the GenerateToken$/, async function(){
 
-  let filename= `${process.cwd()}/data/api-res/GenerateTokenAPIByPost.json`
+  let filename= `${process.cwd()}/data/api-res/Account/GenerateTokenAPIByPost.json`
   let data =  fs.readFileSync(filename, "utf8")
   const jsonData = JSON.parse(data);
   console.log(`Api data:${data}`)
@@ -204,12 +210,22 @@ When(/^Get all information of user by the GenerateToken$/, async function(){
 When(/^User creates a valid account using API$/, async function () {
   console.log(`----------------------------`)  
   let req
+  console.log(`--------------------------`)
+  let fileToken= `${process.cwd()}/data/api-res/Account/GenerateTokenAPIByPost.json`
+  let infoToken =  fs.readFileSync(fileToken, "utf8")
+  let readToken= JSON.parse(infoToken)
+  // console.log(`Books data:${data}`)
+  let token = readToken.token
+  console.log(`-------------3-------------`)
+
+  console.log(token)
+  console.log(`--------------4------------`)
   try {
     let testid= this.testid
     await browser.call(async function () {
       let endpoint = ""
       //@ts-ignore
-      req =await apiHelper.POST(testid, browser.options.postUser, endpoint, userPass )
+      req =await apiHelper.POST(testid, browser.options.postUser, endpoint, token, userPass )
 
         // Extract the response body from the req object
   
@@ -223,9 +239,10 @@ When(/^User creates a valid account using API$/, async function () {
   // await browser.acceptAlert();
   console.log(`----------------------------`)  
   const data = req;
-  let filename= `${process.cwd()}/data/api-res/ResponseBodyReturn.json`
+  let filename= `${process.cwd()}/data/api-res/Account/ResponseBodyReturn.json`
   fs.writeFileSync(filename, data)
-   
+  console.log(`User creates a valid account using API`)
+    await browser.pause(2000)
   await browser.debug()
 
 });
@@ -258,7 +275,7 @@ When(/^User clicks on New User Button$/, async function(){
   await browser.debug()
 })
 
-When(/^User wants to delete the accountI$/, async function(){
+When(/^User wants to delete the account using Api$/, async function(){
 
   let token = await generateToken.token
   let userId = await responseBodyReturn.userID
@@ -276,12 +293,7 @@ try {
     //@ts-ignore
     req =await apiHelper.GET(testid, browser.options.getUser, endpoint, token)
   })
-
-  // store results
-  // let data = JSON.stringify(req.body)
-  // let filename= `${process.cwd()}/data/api-res/requestAPIUsers.json`
-  // fs.writeFileSync(filename, data)
-  reporter.addStep(testid, "info",`User login with userId: ${userId} stored in json file`) 
+  reporter.addStep(testid, "info",`Delete userId: ${userId} stored in json file`) 
 } catch (err) {
     err.message = `${this.testid}: Failed login with the userId getting API users from jsonfile ${err.message}`
     throw err
@@ -297,13 +309,224 @@ try {
    await browser.debug()
 })
 
+When(/^Get all books$/, async function(){
+  try {
+    // get payload data
+    
+  
+    let testid= this.testid
+    let endpoint = ""
+    let req
+    await browser.call(async function () {
+      //@ts-ignore
+      req =await apiHelper.GET(testid, browser.options.getAllBooks, endpoint, "")
+    })
+
+    // store results
+    let data = JSON.stringify(req.body)
+    let filename= `${process.cwd()}/data/api-res/Book/allBook.json`
+    fs.writeFileSync(filename, data)
+    reporter.addStep(testid, "info",`Api response get all data books stored in json file`) 
+  } catch (err) {
+      err.message = `${this.testid}: Failed at getting all data books from reqres ${err.message}`
+      throw err
+  }
+
+  console.log(`--------------------------`)
+        let filename= `${process.cwd()}/data/api-res/Book/allBook.json`
+        let data =  fs.readFileSync(filename, "utf8")
+        let dataObj= JSON.parse(data)
+        console.log(`Books data:${data}`)
+
+   await browser.debug()
+
+})
+
+When(/^Get value of (.*) book$/, async function(titleBook){
+  try {
+    // get payload data
+    console.log(`--------------------------`)
+  let fileallBook= `${process.cwd()}/data/api-res/Book/allBook.json`
+  let allBooks =  fs.readFileSync(fileallBook, "utf8")
+  let dataAllBook= JSON.parse(allBooks)
+  // console.log(`Books data:${data}`)
+  let databook = dataAllBook.books.find(book => book.title === titleBook)
+  let isbn
+  
+if (databook) {
+  console.log(`-------------1-------------`)
+  console.log(databook);
+  console.log(`--------------2------------`)
+  isbn =await databook.isbn
+  console.log(isbn)
+  console.log(`--------------3------------`)
+
+} else {
+  console.log(`No book found with the title "${titleBook}".`);
+}
+  // console.log(dataAllBook.books.find())
 
 
 
+    let testid= this.testid
+  console.log(`--------------4------------`)
+    let endpoint = isbn
+    console.log(endpoint)
+  console.log(`--------------6------------`)
+    let req
+    await browser.call(async function () {
+      //@ts-ignore
+      req =await apiHelper.GET(testid, browser.options.getBook, endpoint, "")
+      
+    })
+
+    // store results
+    let data = JSON.stringify(req.body)
+    let filename= `${process.cwd()}/data/api-res/Book/book.json`
+    fs.writeFileSync(filename, data)
+    reporter.addStep(testid, "info",`Api response get all data book stored in json file`) 
+  } catch (err) {
+      err.message = `${this.testid}: Failed at getting all data book from reqres ${err.message}`
+      throw err
+  }
+  console.log(`-------Data api return and put into folder`)
+  let getbookdt= `${process.cwd()}/data/api-res/Book/book.json`
+  let allBooksData =  fs.readFileSync(getbookdt, "utf8")
+  let bookdata= JSON.parse(allBooksData)
+  console.log(`Books data:${bookdata}`)
+
+   await browser.debug()
+
+})
 
 
 
+When(/^User post a new book$/, async function(titleBook){
+  try {
+    // get payload data
+    // if (databook) {
+//   console.log(`-------------1-------------`)
+//   console.log(databook);
+//   console.log(`--------------2------------`)
+//   isbn =await databook.isbn
+//   console.log(isbn)
+//   console.log(`--------------3------------`)
 
+// } else {
+//   console.log(`No book found with the title "${titleBook}".`);
+// }
+  // console.log(dataAllBook.books.find())
+    console.log(`--------------------------`)
+  let fileAccount= `${process.cwd()}/data/api-res/Account/ResponseBodyReturn.json`
+  let infoUserRead =  fs.readFileSync(fileAccount, "utf8")
+  let readUserid= JSON.parse(infoUserRead)
+  // console.log(`Books data:${data}`)
+  let userid = readUserid.userID
+  let isbn
+  console.log(`-------------1-------------`)
+
+  console.log(userid)
+  console.log(`--------------2------------`)
+  console.log(`--------------------------`)
+  let fileToken= `${process.cwd()}/data/api-res/Account/GenerateTokenAPIByPost.json`
+  let infoToken =  fs.readFileSync(fileToken, "utf8")
+  let readToken= JSON.parse(infoToken)
+  // console.log(`Books data:${data}`)
+  let token = readToken.token
+  console.log(`-------------3-------------`)
+
+  console.log(token)
+  console.log(`--------------4------------`)
+
+  console.log(`--------------4------------`)
+    let endpoint =""
+    console.log(endpoint)
+  console.log(`--------------6------------`)
+    let req
+    let testid= this.testid
+
+    await browser.call(async function () {
+      //@ts-ignore
+      req =await apiHelper.POST(testid, browser.options.getAllBooks, endpoint, token, 
+        {
+          "userId": userid,
+          "collectionOfIsbns":[
+            {
+              "isbn":"9781449331818"
+            }
+          ]
+        }
+      )
+      
+    })
+
+    // store results
+    // let data = JSON.stringify(req.body)
+    // let filename= `${process.cwd()}/data/api-res/Book/bookAfterPostBook.json`
+    // fs.writeFileSync(filename, data)
+
+    reporter.addStep(testid, "info",`Api response POST data book stored in json file`) 
+  } catch (err) {
+      err.message = `${this.testid}: Failed at getting POST data book from reqres ${err.message}`
+      throw err
+  }
+  // console.log(`-------Data api return and put into folder`)
+  // let getbookdt= `${process.cwd()}/data/api-res/Book/book.json`
+  // let allBooksData =  fs.readFileSync(getbookdt, "utf8")
+  // let bookdata= JSON.parse(allBooksData)
+  // console.log(`Books data:${bookdata}`)
+
+   await browser.debug()
+
+})
+
+
+When(/^User clicks on Go To Book Store button$/, async function() {
+    await profilePage.clickGoToBookStoreButton();
+    await browser.debug()
+  })
+  When(/^Verify that user clicked on each item and clicks on Add To Your Collection button$/, async function() {
+    
+    let numberofBookStores = await homeBookStorePage.allNumberofItems()
+    console.log(`------ the number of book stores: ${numberofBookStores}`)
+
+    await homeBookStorePage.clicksOnBookAndAddToYourCollection(this.testid,numberofBookStores);
+
+    await browser.debug()
+  })
+
+  
+When(/^User wants to see the all the items of the dropdowns$/, async function() {
+    
+    let numberofDropdowns = await profilePage.getNumberofDropDowns()
+    console.log(`------ the number of dropdowns: ${numberofDropdowns}`)
+
+   let dataOfDropdowns = await profilePage.getAllValueOfDropdowns();
+    console.log(`----------------`)
+    console.log(dataOfDropdowns)
+
+    await browser.debug()
+  })
+
+
+When(/^User clicks on the Next button to view the next books$/, async function() {
+  
+  console.log(`-----------1--------------`)
+  let numberofPage = await profilePage.getValueOfPageNum()
+  console.log(numberofPage)
+  console.log(`-----------2--------------`)
+  let numberofPageOF = await profilePage.getValueOfPageNumOf()
+  console.log(numberofPageOF)
+  await profilePage.clickNextButton()
+  let numberofBookStoresinNexPage = await homeBookStorePage.allNumberofItems()
+  console.log(`------ the number of book stores in Next Page: ${numberofBookStoresinNexPage}`)
+  console.log(`-------------------------`)
+  await homeBookStorePage.getAllDataOfItem_2(this.testid)
+
+
+  await browser.debug()
+})
+ 
 
 
 

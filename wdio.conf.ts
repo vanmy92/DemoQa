@@ -290,6 +290,11 @@ export const config: WebdriverIO.Config = {
     browser.options["getGenerateToken"] = config.getGenerateToken;
     browser.options["getUser"] = config.getUser;
     browser.options["postUser"] = config.postUser;
+    browser.options["getAllBooks"] = config.getAllBooks;
+    browser.options["getBook"] = config.getBook;
+
+    
+    
 
     
 

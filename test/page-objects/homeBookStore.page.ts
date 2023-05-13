@@ -18,6 +18,9 @@ class HomeBookStorePage extends Page {
   get getAllnumberofItems() {
     return $$(`.mr-2 > a`);
   }
+  get getAllnameBooks() {
+    return $$(`.mr-2`);
+  }
 
   async allNumberofItems() {
     let result = await this.getAllnumberofItems.length;
@@ -75,6 +78,42 @@ class HomeBookStorePage extends Page {
       }
     }
   }
+  async listName(testid: string) {
+    return $$(`.mr-2 > a`).map((item) => item.getText());
+  }
+  async clicktoViewOneItemByName(testid: string, index: number) {
+    await this.click(await this.getAllnameBooks[index]);
+  }
+
+  async clicksOnBookAndAddToYourCollection(testid: string, num: number) {
+    let a = await this.allNumberofItems();
+    let allitemsnumber = await this.getAllnameBooks.length;
+    let list = await this.listName(testid);
+    console.log(`------${a}`);
+    for (let i = 0; i < allitemsnumber; i++) {
+      await this.clicktoViewOneItemByName(testid, i);
+      console.log(`---clicked add to cart item: ${list[i]}`);
+      await browser.pause(4000);
+      
+      await bookDetailsPage.clickAddToYourCollection()
+
+      await browser.pause(4000);
+      if(await browser.isAlertOpen()){
+        let alertText = await browser.getAlertText()
+        // await browser.sendAlertText("asdfasdfad")
+        await browser.acceptAlert()
+        console.log(alertText)
+        await browser.pause(2000)
+    }
+      // await this.click(await this.addtocartbtn);
+      await browser.pause(3000);
+      await bookDetailsPage.clickBackToBookStoreAfterLogin();
+      await browser.pause(3000);
+    }
+  }
+
+
+
 
   
    

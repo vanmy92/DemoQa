@@ -2,6 +2,7 @@ import { Options } from "@wdio/types";
 import chai from "chai";
 import Page from "./page";
 import reporter from "../helper/reporter";
+import homeBookStorePage from "./homeBookStore.page";
 
 class ProfilePage extends Page {
   constructor() {
@@ -33,7 +34,28 @@ class ProfilePage extends Page {
   get getErrorUserAndPass() {
     return $(`#name`);
   }
+  get previousBtn() { 
+    return $(`button=Previous`)
+  }
+  get nextBtn() { 
+    return $(`button=Next`)
+  }
+  async clickNextButton() {
+    await this.click(await this.nextBtn);
+  }
 
+  async getValueOfPageNum(){
+    return (await $(`//input[@aria-label="jump to page"]`)).getValue()
+  }
+  async getValueOfPageNumOf(){
+    return await $(`//*[@class="-totalPages"]`).getText()
+  }
+
+  
+
+  async clickPreviousButton() {
+    await this.click(await this.nextBtn);
+  }
   async clickProfileButton() {
     await this.click(await this.getProfileBtn);
   }
@@ -46,8 +68,25 @@ class ProfilePage extends Page {
   async clickDeleteAllBooksButton() {
     await this.click(await this.getDeleteAllBooksBtn);
   }
-  
 
+
+  get numberOfDropdowns(){
+    return $$(`//*[@aria-label="rows per page"]/option`)
+  }
+
+  async getAllValueOfDropdowns(){
+      return await this.numberOfDropdowns.map((item) =>item.getText())
+  }
+
+  async getNumberofDropDowns(){
+    let result = await this.numberOfDropdowns.length
+    return result
+  }
+
+  async getNumberOfBooks(){
+   let numberofBooks = await homeBookStorePage.allNumberofItems()
+
+  }
   
   
 

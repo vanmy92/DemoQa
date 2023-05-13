@@ -9,11 +9,11 @@ let payload = {
 }
 
 async function GET(testid:string, baseUrl: string, endpoint: string, authToken:string,) {
-    if(!baseUrl || !endpoint){
+    if(!baseUrl){
         throw Error(`One of the given values baseUrl: ${baseUrl}, endpoint: ${endpoint} is not valid `)
     }
     baseUrl = baseUrl.trim()
-    endpoint = endpoint.trim()  
+    // endpoint = endpoint.trim()  
     reporter.addStep(testid, "info", `making a GET to ${endpoint}`)
     try {
         return await request(baseUrl)
@@ -28,7 +28,7 @@ async function GET(testid:string, baseUrl: string, endpoint: string, authToken:s
 }
 
 
-async function POST(testid:string, baseUrl: string, endpoint: string,data: object) {
+async function POST(testid:string, baseUrl: string, endpoint: string, authToken:string, data: object) {
     if(!baseUrl){
         throw new Error(`One of the given values baseUrl: ${baseUrl}, endpoint: ${endpoint} is not valid `)
     }
@@ -39,6 +39,8 @@ async function POST(testid:string, baseUrl: string, endpoint: string,data: objec
        let res = await request(baseUrl)
         .post(endpoint)
         .set("accept", "application/json")
+        .set("authorization", "Basic YXNkZjoxMjMxMjNBQGE=")
+        .auth(authToken, {type: 'bearer'})
         .set("Content-Type","application/json")
         .send(data)
         // console.log(`----5-123---`)
@@ -75,6 +77,7 @@ async function DELETE(testid:string, baseUrl: string, endpoint: string,data: obj
     }
   
 }
+
 
 export default {GET, POST, DELETE}
 
