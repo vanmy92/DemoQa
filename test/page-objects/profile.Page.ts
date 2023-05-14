@@ -52,7 +52,15 @@ class ProfilePage extends Page {
   }
 
   async getSelectedOption(){
- 
+    const selectDropdown =await $('select[aria-label="rows per page"]');
+    const optionValuePromise = selectDropdown.$('option[selected]').getAttribute('value');
+    
+    optionValuePromise.then((optionValue) => {
+      selectDropdown.selectByAttribute('value', optionValue);
+      const selectedOption = selectDropdown.$(`option[value="${optionValue}"]`);
+      const selectedOptionText = selectedOption.getText();
+      console.log('Selected option:', selectedOptionText);
+    });
         // return selectedOptionText
   }
 
