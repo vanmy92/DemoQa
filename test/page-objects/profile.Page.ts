@@ -51,7 +51,10 @@ class ProfilePage extends Page {
     return await $(`//*[@class="-totalPages"]`).getText()
   }
 
-  
+  async getSelectedOption(){
+ 
+        // return selectedOptionText
+  }
 
   async clickPreviousButton() {
     await this.click(await this.nextBtn);
