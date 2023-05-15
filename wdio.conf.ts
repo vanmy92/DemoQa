@@ -125,8 +125,8 @@ export const config: WebdriverIO.Config = {
   // Define all options that are relevant for the WebdriverIO instance here
   //
   // Level of logging verbosity: trace | debug | info | warn | error | silent
-  // logLevel: "error",
-  logLevel: debug.toUpperCase() === "Y" ? "info": "error",
+  logLevel: "info",
+  // logLevel: debug.toUpperCase() === "Y" ? "info": "error",
 
   //
   // Set specific log levels per logger
@@ -292,7 +292,9 @@ export const config: WebdriverIO.Config = {
     browser.options["postUser"] = config.postUser;
     browser.options["getAllBooks"] = config.getAllBooks;
     browser.options["getBook"] = config.getBook;
+    browser.options["postLogin"] = config.postLogin;
 
+    
     
     
 

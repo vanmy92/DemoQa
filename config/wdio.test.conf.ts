@@ -9,10 +9,9 @@ export const config = Object.assign(baseConfig, {
   getUser: "https://demoqa.com/Account/v1/User/",
   getAllBooks: "https://demoqa.com/BookStore/v1/Books",
   getBook :  "https://demoqa.com/BookStore/v1/Book?ISBN=",
+  postLogin :  "https://demoqa.com/Account/v1/Login",
   
   postUser: "https://demoqa.com/Account/v1/User",
-
-  // 'https://demoqa.com/BookStore/v1/Books' 
   nopeCommerceBaseURL: "https://admin-demo.nopcommerce.com",
   sqlConfig: {
     user: process.env.DB_USER,

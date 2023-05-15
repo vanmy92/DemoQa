@@ -35,11 +35,11 @@ Feature: Inventory
         And User clicks on Login button in Book Store Page
             | UserType | Username |
             | StdUser  | asdf     |
-        # And Verify that user clicked on each item and clicks on Add To Your Collection button
+        And Verify that user clicked on each item and clicks on Add To Your Collection button
         And User clicks on Profile button
         Then Verify that the all the book shows in page
-        And User wants to see the all the items of the dropdowns
-        And User clicks on the Next button to view the next books   
+        # And User wants to see the all the items of the dropdowns
+        # And User clicks on the Next button to view the next books   
 
 
 

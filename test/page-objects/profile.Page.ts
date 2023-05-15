@@ -3,6 +3,8 @@ import chai from "chai";
 import Page from "./page";
 import reporter from "../helper/reporter";
 import homeBookStorePage from "./homeBookStore.page";
+import fs from "fs";
+
 
 class ProfilePage extends Page {
   constructor() {
@@ -79,6 +81,14 @@ class ProfilePage extends Page {
   async clickDeleteAllBooksButton() {
     await this.click(await this.getDeleteAllBooksBtn);
   }
+
+  async readFileWithCallback(path) {
+    return fs.readFileSync(path, "utf8")
+  }
+  async writeFileWithCallback(path,data:string) {
+    return fs.writeFileSync(path, data)
+  }
+  // fs.writeFileSync(filename, data)
 
 
   get numberOfDropdowns(){
