@@ -39,7 +39,7 @@ async function POST(testid:string, baseUrl: string, endpoint: string, authToken:
        let res = await request(baseUrl)
         .post(endpoint)
         .set("accept", "application/json")
-        .set("authorization", "Basic YXNkZjoxMjMxMjNBQGE=")
+        .set("authorization", "Basic YXNkZjoxMjMxMjNBQGE==")
         .auth(authToken, {type: 'bearer'})
         .set("Content-Type","application/json")
         .send(data)

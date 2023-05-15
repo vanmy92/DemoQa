@@ -446,17 +446,18 @@ When(/^User post a new book$/, async function(titleBook){
     let testid= this.testid
 
     await browser.call(async function () {
+      const bookData  = {
+        "userId": `${userid}`,
+                "collectionOfIsbns": [
+          {
+            "isbn": "9781491904244"
+          }
+        ]
+      }
+
+const data = JSON.stringify(bookData)
       //@ts-ignore
-      req =await apiHelper.POST(testid, browser.options.getAllBooks, endpoint, token, 
-        {
-          "userId": userid,
-          "collectionOfIsbns":[
-            {
-              "isbn":"9781449331818"
-            }
-          ]
-        }
-      )
+      req =await apiHelper.POST(testid, browser.options.getAllBooks, endpoint, token, bookData)
       
     })
 

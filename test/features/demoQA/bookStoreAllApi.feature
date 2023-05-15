@@ -1,6 +1,6 @@
 Feature: Inventory
 
-    # @demo @smoke @debug
+    @demo @smoke @debug
     Scenario Outline: <TestID>: Book store by using Api
         # Given Login to inventory web app
         Given As a standard user I login to demoqa web app

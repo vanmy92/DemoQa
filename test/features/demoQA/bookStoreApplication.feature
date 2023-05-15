@@ -26,7 +26,7 @@ Feature: Inventory
 
 
 
-    @demo @smoke @debug
+    # @demo @smoke @debug
     Scenario Outline: <TestID>: Login and clicks on each book then clicks on Add To Your Collection
         # Given Login to inventory web app
         Given As a standard user I login to demoqa web app
