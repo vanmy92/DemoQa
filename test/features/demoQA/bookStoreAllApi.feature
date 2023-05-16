@@ -67,7 +67,7 @@ Feature: Inventory
 
 
     # @demo @smoke @debug
-    # Scenario Outline: <TestID>: User login then user want to GET value the BOOK
+    # Scenario Outline: <TestID>: User login then user want to GET value the BOOK   DONE
     #     # Given Login to inventory web app
     #     Given As a standard user I login to demoqa web app
     #     And User clicks on Book Store Application Button
@@ -79,21 +79,50 @@ Feature: Inventory
     #         | INTV_TC001 | Programming JavaScript Applications |
 
 
-    @demo @smoke @debug
-    Scenario Outline: <TestID>: User login then user want to POST Books
+    # @demo @smoke @debug
+    # Scenario Outline: <TestID>: User login UI then user want to POST Books   DONE
+    #     # Given Login to inventory web app
+    #     Given As a standard user I login to demoqa web app
+    #     And User clicks on Book Store Application Button
+    #     And User clicks on Login button in Book Store Page
+    #     And Get all books
+    #     And Get all the value of <titleBook> book
+    #     And User post a new book <titleBook>
+    #     Examples:
+    #         | TestID     | titleBook                           |
+    #         | INTV_TC001 | Programming JavaScript Applications |
+
+
+
+    # @demo @smoke @debug
+    # Scenario Outline: <TestID>: User login UI then user want to DELETE Book  DONE
+    #     # Given Login to inventory web app
+    #     Given As a standard user I login to demoqa web app
+    #     And User clicks on Book Store Application Button
+    #     And User clicks on Login button in Book Store Page
+    #     And Get all books
+    #     And Get all the value of <titleBook> book
+    #     And User delete the <titleBook> book
+    #     Then Verify the book <titleBook> after user deleled
+    #     Examples:
+    #         | TestID     | titleBook        |
+    #         | INTV_TC001 | Git Pocket Guide |
+
+
+    #  @demo @smoke @debug
+    Scenario Outline: <TestID>: User login UI then user want to UPDATE Book  not DONE
         # Given Login to inventory web app
         Given As a standard user I login to demoqa web app
         And User clicks on Book Store Application Button
         And User clicks on Login button in Book Store Page
-        And Get all books
-        And Get all the value of <titleBook> book
-        And User post a new book
-        Examples:
-            | TestID     | titleBook                           |
-            | INTV_TC001 | Programming JavaScript Applications |
-        
-
-
+        # And Get all books
+        # And Get all the value of <titleBook> book
+        # And User delete the <titleBook> book
+        # Then Verify the book <titleBook> after user deleled
+        And User want to update the book
+        # Examples:
+        #     | TestID     | titleBook        |
+        #     | INTV_TC001 | Git Pocket Guide |
 
 
 

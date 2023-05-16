@@ -10,7 +10,7 @@ export const config = Object.assign(baseConfig, {
   getAllBooks: "https://demoqa.com/BookStore/v1/Books",
   getBook :  "https://demoqa.com/BookStore/v1/Book?ISBN=",
   postLogin :  "https://demoqa.com/Account/v1/Login",
-  
+  putBook : "https://demoqa.com/BookStore/v1/Books/",
   postUser: "https://demoqa.com/Account/v1/User",
   nopeCommerceBaseURL: "https://admin-demo.nopcommerce.com",
   sqlConfig: {

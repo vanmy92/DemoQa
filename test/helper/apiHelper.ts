@@ -26,9 +26,11 @@ async function GET(
     return await request(baseUrl)
       .get(endpoint)
       // .query(queryParams)
-      .auth(authToken, { type: "bearer" })
       .set("Content-Type", "application/json")
-      .set("Accept", "application/json");
+      .set("Accept", "application/json")
+      .auth(authToken, {type: "bearer"})
+      // .auth("Authorization", authToken)
+      
   } catch (err) {
     err.message = `error making a Get call to ${endpoint}, ${err}`;
   }
@@ -68,10 +70,12 @@ async function POST(
   }
 }
 
-async function DELETE(
+
+async function PUT(
   testid: string,
   baseUrl: string,
   endpoint: string,
+  authToken: string,
   data: object
 ) {
   if (!baseUrl) {
@@ -84,9 +88,44 @@ async function DELETE(
   reporter.addStep(testid, "info", `making a POST to ${endpoint}`);
   try {
     let res = await request(baseUrl)
-      .post(endpoint)
+      .put(endpoint)
+      .set("accept", "application/json")
+      // .auth(authToken, { type: "bearer" })
+      .set("Authorization",`${authToken}`)
+      .set("Content-Type", "application/json")
+      .send(data);
+     console.log(`----5-123---`)
+        //   .set("authorization", authen)
+    console.log(`-----------Res: ${JSON.stringify(res.body)}`);
+    // return JSON.stringify(res.body);
+
+    console.log(`----6-1234---`);
+  } catch (err) {
+    err.message = `error making a POST call to ${endpoint}, ${err}`;
+  }
+}
+
+async function DELETE(
+  testid: string,
+  baseUrl: string,
+  endpoint: string,
+  token:string,
+  data: object
+) {
+  if (!baseUrl) {
+    throw new Error(
+      `One of the given values baseUrl: ${baseUrl}, endpoint: ${endpoint} is not valid `
+    );
+  }
+  baseUrl = baseUrl.trim();
+  // endpoint = endpoint.trim()
+  reporter.addStep(testid, "info", `making a POST to ${endpoint}`);
+  try {
+    let res = await request(baseUrl)
+      .delete(endpoint)
       .set("accept", "application/json")
       .set("Content-Type", "application/json")
+      .set("Authorization", "Bearer " + token)
       .send(data);
     // console.log(`----5-123---`)
     console.log(`-----------Res: ${JSON.stringify(res.body)}`);
@@ -98,7 +137,7 @@ async function DELETE(
   }
 }
 
-export default { GET, POST, DELETE };
+export default { GET, POST, DELETE, PUT };
 
 /* 
     https://reqres.in

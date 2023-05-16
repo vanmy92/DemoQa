@@ -8,6 +8,8 @@ import responseBodyReturn from "../../../data/api-res/Account/ResponseBodyReturn
 import fs from "fs";
 import reporter from "../../helper/reporter";
 import apiHelper from "../../helper/apiHelper";
+import responseBodyAfterLoginByUI from "../../../data/api-res/Book/ResponseBodyAfterLoginByUI.json"
+import profilePage from "../../page-objects/profile.Page";
 
 
 Then(/^Verify that the all the book shows in page$/, async function(){
@@ -96,6 +98,85 @@ Then(/^Verify that user is logged in with call the UserId and GenerateToken usin
     //  await browser.debug()
  })
 
+
+
+Then(/^Verify the book (.*) after user deleled$/, async function(titleBook){
+  console.log(`after deleted book`)
+
+  console.log(`--------------------------`);
+    let fileToken = `${process.cwd()}/data/api-res/Book/ResponseBodyAfterLoginByUI.json`;
+    let infoToken = await profilePage.readFileWithCallback(fileToken);
+    let readToken = JSON.parse(infoToken);
+    // console.log(`Books data:${data}`)
+    let token = readToken.token;
+  console.log(token)
+  console.log(`--------------------------`);
+
+    let fileAccount = `${process.cwd()}/data/api-res/Book/ResponseBodyAfterLoginByUI.json`;
+    // let infoUserRead =  fs.readFileSync(fileAccount, "utf8")
+    let infoUserRead = await profilePage.readFileWithCallback(fileAccount);
+
+    let readUserid = JSON.parse(infoUserRead);
+
+    // console.log(`Books data:${data}`)
+    let userid = readUserid.userId;
+    console.log(`-------------1-------------`);
+
+    console.log(userid);
+
+  // if(!endpointRef) throw new Error(`Given endpoint ref: ${endpointRef} is not valid`);
+
+  try {
+    // get payload data
+    let testid = this.testid;
+    let endpoint = userid;
+
+    let req;
+    await browser.call(async function () {
+      //@ts-ignore
+      req = await apiHelper.GET(testid,browser.options.getUser,
+        endpoint,token
+      );
+    });
+    let data = JSON.stringify(req.body)
+    let filename= `${process.cwd()}/data/api-res/Book/allInfoAndBooksAfterDeleteBook.json`
+    await profilePage.writeFileWithCallback(filename, data)
+    reporter.addStep(
+      testid,
+      "info",
+      `Get userId: ${userid} stored in json file after deleted book`
+    );
+  } catch (err) {
+    err.message = `${this.testid}: Failed login with the userId getting API users from jsonfile ${err.message}`;
+    throw err;
+  }
+
+  
+ // get payload data
+ console.log(`--------------------------`);
+ let fileallBook = `${process.cwd()}/data/api-res/Book/allInfoAndBooksAfterDeleteBook.json`;
+ let allBooks = await profilePage.readFileWithCallback(fileallBook);
+ let dataAllBook = JSON.parse(allBooks);
+ // console.log(`Books data:${data}`)
+ let databook = dataAllBook.books.find((book) => book.title === titleBook);
+ let isbn;
+
+ if (databook) {
+   console.log(`-------------1-------------`);
+   console.log(databook);
+   console.log(`--------------Book was not detele------------`);
+ } else {
+   console.log(`No book found with the title "${titleBook}". The book was deleted`);
+ }
+ // console.log(dataAllBook.books.find())
+
+
+  await browser.debug();
+
+ 
+  
+})
+ 
 
  Then(/^Check the user was deleted using APi$/, async function(){
 

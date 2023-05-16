@@ -293,7 +293,9 @@ export const config: WebdriverIO.Config = {
     browser.options["getAllBooks"] = config.getAllBooks;
     browser.options["getBook"] = config.getBook;
     browser.options["postLogin"] = config.postLogin;
+    browser.options["putBook"] = config.putBook;
 
+    
     
     
     

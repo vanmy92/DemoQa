@@ -24,22 +24,41 @@ Feature: Inventory
     #         | INTV_TC001 | Programming JavaScript Applications |
     #         # | INTV_TC001 | Understanding ECMAScript 6                 |
 
-
-
+ 
+    # check Again
     # @demo @smoke @debug
-    Scenario Outline: <TestID>: Login and clicks on each book then clicks on Add To Your Collection
+    # Scenario Outline: <TestID>: Login and clicks on each book then clicks on Add To Your Collection
+    #     # Given Login to inventory web app
+    #     Given As a standard user I login to demoqa web app
+    #     And User clicks on Book Store Application Button
+    #     Then Verify that the all the book shows in page
+    #     And User clicks on Login button in Book Store Page
+    #     And Verify that user clicked on each item and clicks on Add To Your Collection button
+    #     And User clicks on Profile button
+    #     Then Verify that the all the book shows in page
+   
+   
+   
+    #     # And User wants to see the all the items of the dropdowns
+    #     # And User clicks on the Next button to view the next books   
+
+
+
+
+    # practice delete
+
+
+    @demo @smoke @debug
+    Scenario Outline: <TestID>: Login and user want to delete the book
         # Given Login to inventory web app
         Given As a standard user I login to demoqa web app
         And User clicks on Book Store Application Button
         Then Verify that the all the book shows in page
         And User clicks on Login button in Book Store Page
-            | UserType | Username |
-            | StdUser  | asdf     |
         And Verify that user clicked on each item and clicks on Add To Your Collection button
         And User clicks on Profile button
         Then Verify that the all the book shows in page
         # And User wants to see the all the items of the dropdowns
-        # And User clicks on the Next button to view the next books   
-
+        # And User 
 
 

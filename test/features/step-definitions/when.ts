@@ -83,7 +83,7 @@ When(/^User clicks on Login button in Book Store Page$/, async function () {
     throw err;
   }
 
-  // await browser.debug()
+  await browser.debug()
 });
 
 When(/^Get value (.*) book$/, async function () {
@@ -408,7 +408,7 @@ When(/^Get all books$/, async function () {
   let dataObj = JSON.parse(data);
   console.log(`Books data:${data}`);
   await browser.pause(1000)
-  // await browser.debug();
+  await browser.debug();
 });
 
 When(/^Get all the value of (.*) book$/, async function (titleBook) {
@@ -461,13 +461,12 @@ When(/^Get all the value of (.*) book$/, async function (titleBook) {
   console.log(`-------Data api return and put into folder`);
   let getbookdt = `${process.cwd()}/data/api-res/Book/book.json`;
   let allBooksData = await profilePage.readFileWithCallback(getbookdt);
-  let bookdata = JSON.parse(allBooksData);
-  console.log(`Books data:${bookdata}`);
+  console.log(`Books all the value of data:${allBooksData}`);
   await browser.pause(1000)
-  // await browser.debug();
+  await browser.debug();
 });
 
-When(/^User post a new book$/, async function (titleBook) {
+When(/^User post a new book (.*)$/, async function (titleBook) {
   try {
     console.log(`--------------------------`);
     let fileAccount = `${process.cwd()}/data/api-res/Book/ResponseBodyAfterLoginByUI.json`;
@@ -502,19 +501,204 @@ When(/^User post a new book$/, async function (titleBook) {
     let req;
     let testid = this.testid;
 
+    console.log(`-----------asdfasdf-------dele--------`);
+    let fileallBook = `${process.cwd()}/data/api-res/Book/allBook.json`;
+    let allBooks = await profilePage.readFileWithCallback(fileallBook);
+    let dataAllBook = JSON.parse(allBooks);
+    console.log(`Books data 134124234:${allBooks}`)
+    let databook = dataAllBook.books.find((book) => book.title === titleBook);
+
+    if (databook) {
+      console.log(`-------------1--asdf-----------`);
+      console.log(databook);
+      console.log(`--------------2---adsf---------`);
+      isbn = await databook.isbn;
+      console.log(isbn);
+      console.log(`--------------3---asdf---------`);
+    } else {
+      console.log(`No book found with the title "${titleBook}".`);
+    }
+
     let bookData = {
       "userId": userid,
       "collectionOfIsbns": [
         {
-          "isbn": "9781449325862"
+          "isbn": isbn
         }
       ]
     }
-    let data = JSON.stringify(bookData)
-    console.log(data)
     await browser.call(async function () {
       //@ts-ignore
       req = await apiHelper.POST(testid,browser.options.getAllBooks,endpoint,token,postBook);
+    });
+
+    let file = `${process.cwd()}/data/api-res/Book/bookPOST.json`
+    let data = JSON.stringify(req)
+    await profilePage.writeFileWithCallback(file,data)
+    reporter.addStep(
+      testid,
+      "info",
+      `Api response POST data book stored in json file`
+    );
+  } catch (err) {
+    err.message = `${this.testid}: Failed at getting POST data book from reqres ${err.message}`;
+    throw err;
+  }
+  await browser.debug();
+});
+
+
+
+When(/^User want to update the book$/, async function () {
+  try {
+    console.log(`--------------------------`);
+    let fileAccount = `${process.cwd()}/data/api-res/Book/ResponseBodyAfterLoginByUI.json`;
+    // let infoUserRead =  fs.readFileSync(fileAccount, "utf8")
+    let infoUserRead = await profilePage.readFileWithCallback(fileAccount);
+
+    let readUserid = JSON.parse(infoUserRead);
+
+    // console.log(`Books data:${data}`)
+    let userid = readUserid.userId;
+    let isbn;
+    console.log(`-------------1-------------`);
+
+    console.log(userid);
+    console.log(`--------------2------------`);
+    console.log(`--------------------------`);
+    let fileToken = `${process.cwd()}/data/api-res/Book/ResponseBodyAfterLoginByUI.json`;
+    let infoToken = await profilePage.readFileWithCallback(fileToken);
+    let readToken = JSON.parse(infoToken);
+    // console.log(`Books data:${data}`)
+    let token = readToken.token;
+
+    
+
+    console.log(`-------------3-------------`);
+
+    console.log(token);
+    console.log(`--------------4------------`);
+
+    console.log(`--------------4------------`);
+    let endpoint = "9781449331818";
+    console.log(endpoint);
+    console.log(`--------------6------------`);
+    let req;
+    let testid = this.testid;
+
+    // console.log(`-----------asdfasdf-------dele--------`);
+    // let fileallBook = `${process.cwd()}/data/api-res/Book/allBook.json`;
+    // let allBooks = await profilePage.readFileWithCallback(fileallBook);
+    // let dataAllBook = JSON.parse(allBooks);
+    // console.log(`Books data 134124234:${allBooks}`)
+    // let databook = dataAllBook.books.find((book) => book.title === titleBook);
+
+    // if (databook) {
+    //   console.log(`-------------1--asdf-----------`);
+    //   console.log(databook);
+    //   console.log(`--------------2---adsf---------`);
+    //   isbn = await databook.isbn;
+    //   console.log(isbn);
+    //   console.log(`--------------3---asdf---------`);
+    // } else {
+    //   console.log(`No book found with the title "${titleBook}".`);
+    // }
+
+    let bookData = {
+      "title": "asdf",
+    "subtitle": "qwer",
+  "author": "tinhte.vn",
+  "publisher": "vn",
+  "totalPages": 12415,
+  "description": "no",
+  "website": "tinhte.vn"
+    }
+    await browser.call(async function () {
+      //@ts-ignore
+      req = await apiHelper.PUT(testid,browser.options.putBook,endpoint,token,bookData);
+    });
+
+    // let file = `${process.cwd()}/data/api-res/Book/bookPOST.json`
+    // let data = JSON.stringify(req)
+    // await profilePage.writeFileWithCallback(file,data)
+    reporter.addStep(
+      testid,
+      "info",
+      `Api response PUT data book stored in json file`
+    );
+  } catch (err) {
+    err.message = `${this.testid}: Failed at getting POST data book from reqres ${err.message}`;
+    throw err;
+  }
+  await browser.debug();
+});
+
+
+
+When(/^User delete the (.*) book$/, async function (titleBook) {
+  try {
+    console.log(`--------------------------`);
+    let fileAccount = `${process.cwd()}/data/api-res/Book/ResponseBodyAfterLoginByUI.json`;
+    // let infoUserRead =  fs.readFileSync(fileAccount, "utf8")
+    let infoUserRead = await profilePage.readFileWithCallback(fileAccount);
+
+    let readUserid = JSON.parse(infoUserRead);
+
+    // console.log(`Books data:${data}`)
+    let userid = readUserid.userId;
+    console.log(`-------------1-------------`);
+
+    console.log(userid);
+    console.log(`--------------2------------`);
+    console.log(`--------------------------`);
+    let fileToken = `${process.cwd()}/data/api-res/Book/ResponseBodyAfterLoginByUI.json`;
+    let infoToken = await profilePage.readFileWithCallback(fileToken);
+    let readToken = JSON.parse(infoToken);
+    // console.log(`Books data:${data}`)
+    let token = readToken.token;
+
+    console.log(`-------------3---dele----------`);
+
+    console.log(token);
+    console.log(`--------------4-----dele-------`);
+
+    console.log(`--------------4------dele------`);
+    let endpoint = "";
+    console.log(endpoint);
+    console.log(`--------------5-----dele-------`);
+    let req;
+    let testid = this.testid;
+    let isbn;
+    
+
+
+    console.log(`-----------asdfasdf-------dele--------`);
+    let fileallBook = `${process.cwd()}/data/api-res/Book/allBook.json`;
+    let allBooks = await profilePage.readFileWithCallback(fileallBook);
+    let dataAllBook = JSON.parse(allBooks);
+    console.log(`Books data 134124234:${allBooks}`)
+    let databook = dataAllBook.books.find((book) => book.title === titleBook);
+
+    if (databook) {
+      console.log(`-------------1--asdf-----------`);
+      console.log(databook);
+      console.log(`--------------2---adsf---------`);
+      isbn = await databook.isbn;
+      console.log(isbn);
+      console.log(`--------------3---asdf---------`);
+    } else {
+      console.log(`No book found with the title "${titleBook}".`);
+    }
+
+    
+    // console.log(dataAllBook.books.find())
+   let bookDelete = {
+    "isbn": isbn,
+    "userId": userid
+}
+    await browser.call(async function () {
+      //@ts-ignore
+      req = await apiHelper.DELETE(testid,browser.options.bookStoreBaseURL,endpoint,token,bookDelete);
     });
     reporter.addStep(
       testid,
