@@ -45,7 +45,6 @@ Feature: Inventory
 
 
 
-    # practice delete
 
 
     @demo @smoke @debug
@@ -55,10 +54,17 @@ Feature: Inventory
         And User clicks on Book Store Application Button
         Then Verify that the all the book shows in page
         And User clicks on Login button in Book Store Page
-        And Verify that user clicked on each item and clicks on Add To Your Collection button
+        # And Verify that user clicked on each item and clicks on Add To Your Collection button
         And User clicks on Profile button
-        Then Verify that the all the book shows in page
-        # And User wants to see the all the items of the dropdowns
-        # And User 
+        And User wants to delete the book <nameOfBook>
+        Examples:
+            | TestID     | nameOfBook                          |
+            # | INTV_TC001 | Git Pocket Guide               |
+            | INTV_TC001 | Learning JavaScript Design Patterns          |
+            # | INTV_TC001 | Designing Evolvable Web APIs with ASP.NET            |
+            # | INTV_TC001 | Speaking JavaScript |
+            # | INTV_TC001 | Programming JavaScript Applications |
+            # | INTV_TC001 | Understanding ECMAScript 6                 |
+
 
 

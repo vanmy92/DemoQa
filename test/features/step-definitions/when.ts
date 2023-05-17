@@ -780,6 +780,26 @@ When(
   }
 );
 
+When(/^User wants to delete the book (.*)$/, async function(nameOfBook) {
+  
+  let numberofBookStores = await homeBookStorePage.allNumberofItems()
+  console.log(`------ the number of book stores: ${numberofBookStores}`)
+  await homeBookStorePage.getAllDataOfItem_2(this.testid)
+  // let dataBookStores = await homeBookStorePage.getAllDataOfItem_2(this.testid)
+
+  // let book = dataBookStores.filter(book => book.Title === nameOfBook)
+  // console.log(`-------------------`)
+  // console.log(book)
+
+  console.log(`-------------------`)
+  let getDelBookLocator = await homeBookStorePage.getDeleteButtonByTitle(this.testid, nameOfBook);
+  console.log(getDelBookLocator)
+
+
+
+  await browser.debug()
+})
+
 // When(/^User clicks on menu button$/, async function() {
 //   await homePage.clickMenuBtn(this.testid);
 //   // await homePage.clickLogoutBtn(this.testid);

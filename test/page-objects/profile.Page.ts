@@ -53,6 +53,8 @@ class ProfilePage extends Page {
     return await $(`//*[@class="-totalPages"]`).getText()
   }
 
+
+
   async getSelectedOption(){
     const selectDropdown =await $('select[aria-label="rows per page"]');
     const optionValuePromise = selectDropdown.$('option[selected]').getAttribute('value');

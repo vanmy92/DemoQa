@@ -145,6 +145,23 @@ class HomeBookStorePage extends Page {
 
     return items;
   }
+
+  get deleteBtns(){
+    return $$(`.rt-td:last-child > div.action-buttons > span`)
+  }
+  async  getDeleteButtonByTitle(testid:string,title:string) {
+    let data = await this.getAllDataOfItem_2(testid)
+    const book = await data.find((book) => book.$('.rt-td > div.action-buttons > span > a').getText() === title);
+    if (!book) {
+      throw new Error(`Book with title "${title}" not found`);
+    }
+    const deleteButton = book.$('.rt-td:last-child > div.action-buttons > span');
+    if (!deleteButton) {
+      throw new Error(`Delete button not found for book with title "${title}"`);
+    }
+    return deleteButton;
+  }
+
   get getTitle(){
     return $$(`.mr-2 > a`)
   }
