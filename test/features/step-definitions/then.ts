@@ -1,4 +1,4 @@
-import { Then } from "@wdio/cucumber-framework";
+import { Then, When } from "@wdio/cucumber-framework";
 import chai from "chai";
 import homeBookStorePage from "../../page-objects/homeBookStore.page";
 import bookDetailsPage from "../../page-objects/bookDetails.page";
@@ -37,6 +37,13 @@ Then(/^Verify that the user is at Login page$/, async function(){
     // await browser.debug()
 })
 
+
+Then(/^Verify that the books shows in the table pagination$/, async function(){
+  await browser.scroll(0, 400);
+  await profilePage.getAllitemsBookstore(this.testid)
+
+  await browser.debug()
+})
 
 Then(/^Get the value of the book and verify it$/, async function(){
 
@@ -205,3 +212,8 @@ Then(/^Verify the book (.*) after user deleled$/, async function(titleBook){
    await browser.debug()
 })
  
+When(/^Verify that the book (.*) is deleted$/, async function (title) {
+  
+  await profilePage.getDeleteButtonByTitleAfterDele(this.testid,title)
+  await browser.debug()
+})

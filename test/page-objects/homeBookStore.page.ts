@@ -2,6 +2,8 @@ import { Options } from "@wdio/types";
 import chai from "chai";
 import Page from "./page";
 import bookDetailsPage from "./bookDetails.page";
+import profilePage from "./profile.Page";
+import fs from "fs";
 
 class HomeBookStorePage extends Page {
   constructor() {
@@ -118,6 +120,10 @@ class HomeBookStorePage extends Page {
   
    
 
+  async writeFileWithCallback(path, data: string) {
+    return fs.writeFileSync(path, data);
+  }
+
 
 
 
@@ -142,26 +148,14 @@ class HomeBookStorePage extends Page {
       console.log(item);
       items.push(item);
     }
-
+    let fileBook = `${process.cwd()}/data/api-res/BookUIRes/allbooks.json`;
+    let data = JSON.stringify(items)
+    await this.writeFileWithCallback(fileBook, data)
     return items;
   }
 
-  get deleteBtns(){
-    return $$(`.rt-td:last-child > div.action-buttons > span`)
-  }
-  async  getDeleteButtonByTitle(testid:string,title:string) {
-    let data = await this.getAllDataOfItem_2(testid)
-    const book = await data.find((book) => book.$('.rt-td > div.action-buttons > span > a').getText() === title);
-    if (!book) {
-      throw new Error(`Book with title "${title}" not found`);
-    }
-    const deleteButton = book.$('.rt-td:last-child > div.action-buttons > span');
-    if (!deleteButton) {
-      throw new Error(`Delete button not found for book with title "${title}"`);
-    }
-    return deleteButton;
-  }
-
+ 
+  
   get getTitle(){
     return $$(`.mr-2 > a`)
   }
