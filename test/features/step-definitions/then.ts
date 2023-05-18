@@ -39,9 +39,9 @@ Then(/^Verify that the user is at Login page$/, async function(){
 })
 
 
-Then(/^Verify that the books shows in the table pagination$/, async function(){
+Then(/^Verify that the books shows in the table pagination (.*)$/, async function(nameofBook){
   await browser.scroll(0, 400);
-  await profilePage.getAllitemsBookstore(this.testid)
+  await profilePage.getAllitemsBookstore(this.testid,nameofBook)
 
   await browser.debug()
 })

@@ -331,19 +331,36 @@ class ProfilePage extends Page {
   }
 
 
-  async getAllitemsBookstore(testid:string) {
+  async getAllitemsBookstore(testid:string, title:string) {
 
     // await this.getDataBookInProfileBeforeDeleteBook
 
     let fileBook1 = `${process.cwd()}/data/api-res/BookUIRes/allbookInProFileBeforeDelete.json`;
     let allBookPage1 =  await this.readFileWithCallback(fileBook1)
     console.log(allBookPage1)
+    console.log(typeof(allBookPage1))
     console.log(`--------------`)
-   
+    
+    let allBookPage1Converted = await JSON.parse(allBookPage1)
+
     // let combineBookItems = allBookPage1+ allBookPage2
     // console.log(combineBookItems)
+      // for(let i = 0; i < allBookPage1.length; i++){
+      //   if(allBookPage1[i].Title === title)
+      // }
+      let bookfinded = await allBookPage1Converted.filter((book) => book.Title === title);
 
+      if(bookfinded.length > 0){
+        console.log(bookfinded)
+      }
+      else {
+        console.log(`can not find book`)
+      }
 
+    //   for book in allBookPage1:
+    // if book["Title"] == "Eloquent JavaScript, Second Edition":
+    //     print(book)
+    //     break
 
     if (await this.nextBtn.isEnabled()) {
     console.log(`--------------`)
@@ -357,6 +374,11 @@ class ProfilePage extends Page {
       console.log(allBookPage2)
       console.log(`--------------`)
       console.log('Clicked Next button');
+
+      // let fileAllBook =`${process.cwd()}/data/api-res/BookUIRes/allbook2Pages.json`;
+      // let allBooks = await allBookPage1.concat(allBookPage2)
+      // console.log(`--------------`)
+      // console.log(allBooks)
     } else {
       console.log('Next button is disabled');
     }

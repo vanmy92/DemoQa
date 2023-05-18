@@ -72,14 +72,36 @@ Feature: Inventory
 
 
 
-    # practicing
+    # practicing -> not Done
 
 
     # case > 5 items in table of books 
     # -> press Next button to view the next books 
     # -> then it will delete the book
 
-    @demo @smoke @debug
+    # @demo @smoke @debug
+    # Scenario Outline: <TestID>: Login and user want to delete the book 
+    #     # Given Login to inventory web app
+    #     Given As a standard user I login to demoqa web app
+    #     And User clicks on Book Store Application Button
+    #     Then Verify that the all the book shows in page
+    #     And User clicks on Login button in Book Store Page
+    #     And User clicks on Profile button
+    #     # And User wants to see the all the items of the dropdowns
+    #     Then Verify that the books shows in the table pagination
+    #     # And User wants to delete the book <nameOfBook>
+    #     # Then Verify that the book <nameOfBook> is deleted
+    #     # Examples:
+    #         # | TestID     | nameOfBook                          |
+    #     #     # | INTV_TC001 | Git Pocket Guide               |
+    #         # | INTV_TC001 | Speaking JavaScript          |
+    #         # | INTV_TC001 | Designing Evolvable Web APIs with ASP.NET            |
+    #         # | INTV_TC001 | Git Pocket Guide |
+    #         # | INTV_TC001 | Programming JavaScript Applications |
+    #         # | INTV_TC001 | Understanding ECMAScript 6                 |
+
+
+@demo @smoke @debug
     Scenario Outline: <TestID>: Login and user want to delete the book 
         # Given Login to inventory web app
         Given As a standard user I login to demoqa web app
@@ -88,16 +110,15 @@ Feature: Inventory
         And User clicks on Login button in Book Store Page
         And User clicks on Profile button
         # And User wants to see the all the items of the dropdowns
-        Then Verify that the books shows in the table pagination
+        Then Verify that the books shows in the table pagination <nameOfBook>
         # And User wants to delete the book <nameOfBook>
         # Then Verify that the book <nameOfBook> is deleted
-        # Examples:
-            # | TestID     | nameOfBook                          |
-        #     # | INTV_TC001 | Git Pocket Guide               |
+        Examples:
+            | TestID     | nameOfBook                          |
+            | INTV_TC001 | Understanding ECMAScript 6               |
             # | INTV_TC001 | Speaking JavaScript          |
             # | INTV_TC001 | Designing Evolvable Web APIs with ASP.NET            |
             # | INTV_TC001 | Git Pocket Guide |
             # | INTV_TC001 | Programming JavaScript Applications |
             # | INTV_TC001 | Understanding ECMAScript 6                 |
-
 
