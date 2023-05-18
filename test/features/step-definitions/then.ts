@@ -26,6 +26,7 @@ Then(/^Verify that the all the book shows in page$/, async function(){
     // console.log(`--------------- all data items ----------------`)
     // console.log(allDataItems2)
     await homeBookStorePage.getAllDataOfItem_2(this.testid)
+    await browser.pause(1000)
     // await browser.debug()
 })
 
