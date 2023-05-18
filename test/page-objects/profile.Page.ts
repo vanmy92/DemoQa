@@ -218,6 +218,8 @@ class ProfilePage extends Page {
    
 
 // "//a[text()='Learning JavaScript Design Patterns']/../../../..//span[@id='delete-record-undefined']"
+// "//a[text()='Learning JavaScript Design Patterns']/../../../..//span[@id='delete-record-undefined']"
+
 
       console.log(`-`);
       let data = await this.getDataBookInProfileBeforeDeleteBook(testid);
