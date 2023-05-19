@@ -23,5 +23,20 @@
         "Title": "Git Pocket Guide",
         "Author": "Richard E. Silverman",
         "Publisher": "O'Reilly Media"
+    },
+    {
+        "Title": "Programming JavaScript Applications",
+        "Author": "Eric Elliott",
+        "Publisher": "O'Reilly Media"
+    },
+    {
+        "Title": "Eloquent JavaScript, Second Edition",
+        "Author": "Marijn Haverbeke",
+        "Publisher": "No Starch Press"
+    },
+    {
+        "Title": "Understanding ECMAScript 6",
+        "Author": "Nicholas C. Zakas",
+        "Publisher": "No Starch Press"
     }
 ]

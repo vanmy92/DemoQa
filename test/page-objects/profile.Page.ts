@@ -339,22 +339,70 @@ class ProfilePage extends Page {
     let allBookPage1 =  await this.readFileWithCallback(fileBook1)
     console.log(allBookPage1)
     console.log(typeof(allBookPage1))
-    console.log(`--------------`)
+    console.log(`-------1-------`)
     
     let allBookPage1Converted = await JSON.parse(allBookPage1)
 
-    // let combineBookItems = allBookPage1+ allBookPage2
-    // console.log(combineBookItems)
+    
       // for(let i = 0; i < allBookPage1.length; i++){
       //   if(allBookPage1[i].Title === title)
       // }
-      let bookfinded = await allBookPage1Converted.filter((book) => book.Title === title);
+      let bookfinded1 = await allBookPage1Converted.filter((book) => book.Title === title);
 
-      if(bookfinded.length > 0){
-        console.log(bookfinded)
+
+
+
+      if(bookfinded1.length > 1){
+        console.log(bookfinded1)
       }
       else {
-        console.log(`can not find book`)
+        // console.log(`can not find book`)
+        if (await this.nextBtn.isEnabled()) {
+          console.log(`------2--------`)
+      
+            await this.clickNextButton()
+          console.log(`------3--------`)
+      
+            await this.getDataBookInProfileBookPagi2(testid)
+            let fileBook2 = `${process.cwd()}/data/api-res/BookUIRes/allbookInProFileAfterClickNextBtn.json`;
+            let allBookPage2 =  await this.readFileWithCallback(fileBook2)
+            console.log(typeof(allBookPage2))
+            let allBookPage2Converted = await JSON.parse(allBookPage2)
+            console.log(allBookPage2)
+            console.log(`-----4---------`)
+            console.log('Clicked Next button');
+
+            let allBookItems = allBookPage1Converted.concat(allBookPage2Converted)
+            console.log(allBookItems)
+
+            let fileAllBooks = `${process.cwd()}/data/api-res/BookUIRes/allBookInProfile.json`;
+            let fileAllBooksConvert =  JSON.stringify(allBookItems);
+            console.log(typeof(fileAllBooksConvert))
+            await this.writeFileWithCallback(fileAllBooks,fileAllBooksConvert)
+            console.log(`---------5-----`)
+
+
+             let fileAllBooks_check =  `${process.cwd()}/data/api-res/BookUIRes/allBookInProfile.json`;
+            let checkAgain =  await this.readFileWithCallback(fileAllBooks_check)
+            let check = JSON.parse(checkAgain)
+            console.log(check)
+
+            let bookfinded2 = await allBookPage2Converted.find((book) => book.Title === title);
+            if(bookfinded2){
+            console.log(`---------6-----`)
+              console.log(`finded the book: ${bookfinded2}`)
+            }
+            else{
+              console.log(`can not find book ${title}`)
+
+            }
+            // let fileAllBook =`${process.cwd()}/data/api-res/BookUIRes/allbook2Pages.json`;
+            // let allBooks = await allBookPage1.concat(allBookPage2)
+            // console.log(`--------------`)
+            // console.log(allBooks)
+          } else {
+            console.log('Next button is disabled');
+          }
       }
 
     //   for book in allBookPage1:
@@ -362,26 +410,7 @@ class ProfilePage extends Page {
     //     print(book)
     //     break
 
-    if (await this.nextBtn.isEnabled()) {
-    console.log(`--------------`)
-
-      await this.clickNextButton()
-    console.log(`--------------`)
-
-      await this.getDataBookInProfileBookPagi2(testid)
-      let fileBook2 = `${process.cwd()}/data/api-res/BookUIRes/allbookInProFileAfterClickNextBtn.json`;
-      let allBookPage2 =  await this.readFileWithCallback(fileBook2)
-      console.log(allBookPage2)
-      console.log(`--------------`)
-      console.log('Clicked Next button');
-
-      // let fileAllBook =`${process.cwd()}/data/api-res/BookUIRes/allbook2Pages.json`;
-      // let allBooks = await allBookPage1.concat(allBookPage2)
-      // console.log(`--------------`)
-      // console.log(allBooks)
-    } else {
-      console.log('Next button is disabled');
-    }
+    
 
 
 

@@ -102,7 +102,7 @@ Feature: Inventory
 
 
 @demo @smoke @debug
-    Scenario Outline: <TestID>: Login and user want to delete the book 
+    Scenario Outline: <TestID>: Login and user want to find the book by > 5 items
         # Given Login to inventory web app
         Given As a standard user I login to demoqa web app
         And User clicks on Book Store Application Button
@@ -115,7 +115,7 @@ Feature: Inventory
         # Then Verify that the book <nameOfBook> is deleted
         Examples:
             | TestID     | nameOfBook                          |
-            | INTV_TC001 | Understanding ECMAScript 6               |
+            | INTV_TC001 | Understanding ECMAScript 6  1asdfasd              |
             # | INTV_TC001 | Speaking JavaScript          |
             # | INTV_TC001 | Designing Evolvable Web APIs with ASP.NET            |
             # | INTV_TC001 | Git Pocket Guide |
