@@ -68,8 +68,8 @@ class ProfilePage extends Page {
   //   return output;
   // }
 
-  get getTitle(){
-    return $$(`.mr-2 > a`)
+  get getTitle() {
+    return $$(`.mr-2 > a`);
   }
   get getAuthor() {
     return $$(`//*[@class="rt-tr-group"]//div[3]`);
@@ -105,8 +105,8 @@ class ProfilePage extends Page {
       items.push(item);
     }
     let fileBook = `${process.cwd()}/data/api-res/BookUIRes/allbookInProFileBeforeDelete.json`;
-    let data = JSON.stringify(items)
-    await this.writeFileWithCallback(fileBook, data)
+    let data = JSON.stringify(items);
+    await this.writeFileWithCallback(fileBook, data);
     return items;
   }
 
@@ -130,11 +130,10 @@ class ProfilePage extends Page {
       items.push(item);
     }
     let fileBook = `${process.cwd()}/data/api-res/BookUIRes/allbookInProFileAfterDelete.json`;
-    let data = JSON.stringify(items)
-    await this.writeFileWithCallback(fileBook, data)
+    let data = JSON.stringify(items);
+    await this.writeFileWithCallback(fileBook, data);
     return items;
   }
-
 
   async getDataBookInProfileBookPagi2(testid: string) {
     const items = [];
@@ -156,8 +155,8 @@ class ProfilePage extends Page {
       items.push(item);
     }
     let fileBook = `${process.cwd()}/data/api-res/BookUIRes/allbookInProFileAfterClickNextBtn.json`;
-    let data = JSON.stringify(items)
-    await this.writeFileWithCallback(fileBook, data)
+    let data = JSON.stringify(items);
+    await this.writeFileWithCallback(fileBook, data);
     return items;
   }
 
@@ -175,32 +174,25 @@ class ProfilePage extends Page {
     return $$(`//*[@class="rt-tr-group"]`);
   }
 
- 
-
   get modal() {
     return $('.modal[aria-modal="true"]');
   }
 
   get titleAlert() {
-    return this.modal.$('.modal-title');
+    return this.modal.$(".modal-title");
   }
 
   get message() {
-    return this.modal.$('.modal-body');
+    return this.modal.$(".modal-body");
   }
 
   get okButton() {
-    return this.modal.$('#closeSmallModal-ok');
+    return this.modal.$("#closeSmallModal-ok");
   }
 
   get cancelButton() {
-    return this.modal.$('#closeSmallModal-cancel');
+    return this.modal.$("#closeSmallModal-cancel");
   }
-
-  
-  
-
- 
 
   async clickOkButton() {
     await this.click(await this.okButton);
@@ -210,68 +202,57 @@ class ProfilePage extends Page {
     await this.click(await this.cancelButton);
   }
 
-  
-
-  async getDeleteButtonByTitleBeforeDele(testid: string, title: string) {
-    
+  async DeleteBookByTitleInUI(testid: string, title: string) {
     console.log(`-------------------`);
-   
 
-// "//a[text()='Learning JavaScript Design Patterns']/../../../..//span[@id='delete-record-undefined']"
-// "//a[text()='Learning JavaScript Design Patterns']/../../../..//span[@id='delete-record-undefined']"
+    // check parents locator
+    // "//a[text()='Learning JavaScript Design Patterns']/../../../..//span[@id='delete-record-undefined']"
 
-
+    console.log(`-`);
+    let data = await this.getDataBookInProfileBeforeDeleteBook(testid);
+    let book = data.filter((book) => book.Title === title);
+    console.log(`-`);
+    console.log(book);
+    console.log(`-`);
+    if (book.length === 0) {
+      console.log(`can not find book that delete`);
+    } else {
+      // await this.clickDeleteButton;
+      let deletebtn = await $(
+        `//a[text()='${title}']/../../../..//span[@id='delete-record-undefined']`
+      );
+      await deletebtn.waitForClickable();
+      await deletebtn.click();
       console.log(`-`);
-      let data = await this.getDataBookInProfileBeforeDeleteBook(testid);
-      let book = data.filter((book) => book.Title === title);
-      console.log(`-`)
-      console.log(book)
-      console.log(`-`)
-      if (book.length===0) {
-        console.log(`can not find book that delete`)
-      }
-      else{
-        // await this.clickDeleteButton;
-        let deletebtn = await $(`//a[text()='${title}']/../../../..//span[@id='delete-record-undefined']`)
-        await deletebtn.waitForClickable()
-        await deletebtn.click()
-        console.log(`-`)
-        await this.modal.isDisplayed();
-        await browser.pause(2000)
-        let titleAlert =await this.titleAlert.getText();
-        let contentAlert =await this.message.getText();
-        console.log(titleAlert)
-        console.log(contentAlert)
+      await this.modal.isDisplayed();
+      await browser.pause(2000);
+      let titleAlert = await this.titleAlert.getText();
+      let contentAlert = await this.message.getText();
+      console.log(titleAlert);
+      console.log(contentAlert);
 
-        await this.clickOkButton()
-        await browser.pause(2000)
-        const okButton = $('#closeSmallModal-ok');
-        await browser.pause(2000)
-        console.log(`-`)
-        await browser.pause(2000)
-        console.log(`the book has been deleted`)
-      }
-
-    
+      await this.clickOkButton();
+      await browser.pause(2000);
+      const okButton = $("#closeSmallModal-ok");
+      await browser.pause(2000);
+      console.log(`-`);
+      await browser.pause(2000);
+      console.log(`the book has been deleted`);
+    }
   }
   async getDeleteButtonByTitleAfterDele(testid: string, title: string) {
-    
     console.log(`-------------------`);
-   
 
-// "//a[text()='Learning JavaScript Design Patterns']/../../../..//span[@id='delete-record-undefined']"
+    // "//a[text()='Learning JavaScript Design Patterns']/../../../..//span[@id='delete-record-undefined']"
 
-      let dataAfter = await this.getDataBookInProfileAfterDeleteBook(testid);
-      let bookAfter = dataAfter.filter((book) => book.Title === title);
-      console.log(`-`)
-      console.log(bookAfter)
-      console.log(`-`)
-      if (bookAfter.length===0) {
-        console.log(`Confirm that book deleted . can not find book that delete`)
-      }
-
-
-    
+    let dataAfter = await this.getDataBookInProfileAfterDeleteBook(testid);
+    let bookAfter = dataAfter.filter((book) => book.Title === title);
+    console.log(`-`);
+    console.log(bookAfter);
+    console.log(`-`);
+    if (bookAfter.length === 0) {
+      console.log(`Confirm that book deleted . can not find book that delete`);
+    }
   }
 
   async getSelectedOption() {
@@ -330,93 +311,95 @@ class ProfilePage extends Page {
     let numberofBooks = await homeBookStorePage.allNumberofItems();
   }
 
-
-  async getAllitemsBookstore(testid:string, title:string) {
-
+  async getAllitemsBookstore(testid: string, title: string) {
     // await this.getDataBookInProfileBeforeDeleteBook
 
     let fileBook1 = `${process.cwd()}/data/api-res/BookUIRes/allbookInProFileBeforeDelete.json`;
-    let allBookPage1 =  await this.readFileWithCallback(fileBook1)
-    console.log(allBookPage1)
-    console.log(typeof(allBookPage1))
-    console.log(`-------1-------`)
-    
-    let allBookPage1Converted = await JSON.parse(allBookPage1)
+    let allBookPage1 = await this.readFileWithCallback(fileBook1);
+    console.log(allBookPage1);
+    console.log(typeof allBookPage1);
+    console.log(`-------1-------`);
 
-    
-      // for(let i = 0; i < allBookPage1.length; i++){
-      //   if(allBookPage1[i].Title === title)
-      // }
-      let bookfinded1 = await allBookPage1Converted.filter((book) => book.Title === title);
+    let allBookPage1Converted = await JSON.parse(allBookPage1);
 
+    // for(let i = 0; i < allBookPage1.length; i++){
+    //   if(allBookPage1[i].Title === title)
+    // }
+    console.log(`---------1.1-----`);
 
+    let bookfinded1 = await allBookPage1Converted.find(
+      (book) => book.Title === title
+    );
+    console.log(`---------1.1-----`);
 
+    console.log(JSON.stringify(bookfinded1));
+    console.log(`---------1.222-----`);
 
-      if(bookfinded1.length > 1){
-        console.log(bookfinded1)
+    if (bookfinded1) {
+      console.log(JSON.stringify(bookfinded1));
+      let fileAllBooks = `${process.cwd()}/data/api-res/BookUIRes/allBookInProfile.json`;
+      let fileAllBooksConvert = JSON.stringify(allBookPage1);
+      console.log(typeof fileAllBooksConvert);
+      await this.writeFileWithCallback(fileAllBooks, fileAllBooksConvert);
+      console.log(`---------1.2-----`);
+    } else {
+      // console.log(`can not find book`)
+      if (await this.nextBtn.isEnabled()) {
+        console.log(`book not found in page 1`);
+        console.log(`------2--------`);
+        console.log(`click on next button to continue to find the book`);
+
+        await this.clickNextButton();
+        console.log(`------3--------`);
+
+        await this.getDataBookInProfileBookPagi2(testid);
+        let fileBook2 = `${process.cwd()}/data/api-res/BookUIRes/allbookInProFileAfterClickNextBtn.json`;
+        let allBookPage2 = await this.readFileWithCallback(fileBook2);
+        console.log(typeof allBookPage2);
+        let allBookPage2Converted = await JSON.parse(allBookPage2);
+        console.log(allBookPage2);
+        console.log(`-----4---------`);
+        console.log("Clicked Next button");
+
+        let allBookItems = allBookPage1Converted.concat(allBookPage2Converted);
+        console.log(allBookItems);
+
+        let fileAllBooks = `${process.cwd()}/data/api-res/BookUIRes/allBookInProfile.json`;
+        let fileAllBooksConvert = JSON.stringify(allBookItems);
+        console.log(typeof fileAllBooksConvert);
+        await this.writeFileWithCallback(fileAllBooks, fileAllBooksConvert);
+        console.log(`---------5-----`);
+
+        let fileAllBooks_check = `${process.cwd()}/data/api-res/BookUIRes/allBookInProfile.json`;
+        let checkAgain = await this.readFileWithCallback(fileAllBooks_check);
+        let check = JSON.parse(checkAgain);
+        console.log(check);
+
+        let bookfinded2 = await allBookPage2Converted.find(
+          (book) => book.Title === title
+        );
+        console.log(bookfinded2);
+        if (bookfinded2) {
+          console.log(`---------6-----`);
+          console.log(`finded the book: ${JSON.stringify(bookfinded2)}`);
+        } else {
+          console.log(`can not find book ${title}`);
+        }
+        // let fileAllBook =`${process.cwd()}/data/api-res/BookUIRes/allbook2Pages.json`;
+        // let allBooks = await allBookPage1.concat(allBookPage2)
+        // console.log(`--------------`)
+        // console.log(allBooks)
+      } else {
+      console.log(`can not find book`)
+        console.log("Next button is disabled");
       }
-      else {
-        // console.log(`can not find book`)
-        if (await this.nextBtn.isEnabled()) {
-          console.log(`------2--------`)
-      
-            await this.clickNextButton()
-          console.log(`------3--------`)
-      
-            await this.getDataBookInProfileBookPagi2(testid)
-            let fileBook2 = `${process.cwd()}/data/api-res/BookUIRes/allbookInProFileAfterClickNextBtn.json`;
-            let allBookPage2 =  await this.readFileWithCallback(fileBook2)
-            console.log(typeof(allBookPage2))
-            let allBookPage2Converted = await JSON.parse(allBookPage2)
-            console.log(allBookPage2)
-            console.log(`-----4---------`)
-            console.log('Clicked Next button');
-
-            let allBookItems = allBookPage1Converted.concat(allBookPage2Converted)
-            console.log(allBookItems)
-
-            let fileAllBooks = `${process.cwd()}/data/api-res/BookUIRes/allBookInProfile.json`;
-            let fileAllBooksConvert =  JSON.stringify(allBookItems);
-            console.log(typeof(fileAllBooksConvert))
-            await this.writeFileWithCallback(fileAllBooks,fileAllBooksConvert)
-            console.log(`---------5-----`)
-
-
-             let fileAllBooks_check =  `${process.cwd()}/data/api-res/BookUIRes/allBookInProfile.json`;
-            let checkAgain =  await this.readFileWithCallback(fileAllBooks_check)
-            let check = JSON.parse(checkAgain)
-            console.log(check)
-
-            let bookfinded2 = await allBookPage2Converted.find((book) => book.Title === title);
-            if(bookfinded2){
-            console.log(`---------6-----`)
-              console.log(`finded the book: ${bookfinded2}`)
-            }
-            else{
-              console.log(`can not find book ${title}`)
-
-            }
-            // let fileAllBook =`${process.cwd()}/data/api-res/BookUIRes/allbook2Pages.json`;
-            // let allBooks = await allBookPage1.concat(allBookPage2)
-            // console.log(`--------------`)
-            // console.log(allBooks)
-          } else {
-            console.log('Next button is disabled');
-          }
-      }
+    }
 
     //   for book in allBookPage1:
     // if book["Title"] == "Eloquent JavaScript, Second Edition":
     //     print(book)
     //     break
-
-    
-
-
-
-
   }
-
 }
 
 export default new ProfilePage();

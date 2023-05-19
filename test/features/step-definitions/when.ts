@@ -10,6 +10,8 @@ import loginPage from "../../page-objects/login.page";
 import profilePage from "../../page-objects/profile.Page";
 import userPass from "../../../data/userPass.json";
 import postBook from "../../../data/postBooks.json";
+import elementsPage from "../../page-objects/Element/elements.page";
+import elementsHomePage from "../../page-objects/Element/elementsHome.page";
 import generateToken from "../../../data/api-res/Account/GenerateTokenAPIByPost.json";
 import responseBodyReturn from "../../../data/api-res/Account/ResponseBodyReturn.json";
 import { profile } from "winston";
@@ -330,7 +332,9 @@ When(/^User clicks on Back To Book Store button$/, async function () {
 When(/^User clicks on Profile button$/, async function () {
   await profilePage.clickProfileButton();
   await browser.pause(1000)
-  // await browser.debug();
+  await profilePage.getDataBookInProfileBeforeDeleteBook(this.testid)
+  await browser.pause(1000)
+  await browser.debug();
 });
 When(/^User clicks on New User Button$/, async function () {
   await loginPage.clickNewUser();
@@ -788,9 +792,9 @@ When(/^User wants to delete the book (.*)$/, async function(nameOfBook) {
   console.log(`------ the number of book stores: ${numberofBookStores}`)
   // await homeBookStorePage.getAllDataOfItem_2(this.testid)
   // let dataBookStores = await homeBookStorePage.getAllDataOfItem_2(this.testid)
-  console.log(`-------------------`)
-
-  let book = await profilePage.getDeleteButtonByTitleBeforeDele(this.testid, nameOfBook);
+  console.log(`---------1----------`)
+  console.log(`User wants to delete the book: ${nameOfBook}`)
+  let book = await profilePage.DeleteBookByTitleInUI(this.testid, nameOfBook);
   
   console.log(`-------------------`)
 
@@ -805,3 +809,33 @@ When(/^User wants to delete the book (.*)$/, async function(nameOfBook) {
 
   await browser.debug()
 })
+
+
+When(/^User clicks on Text Box button$/, async function () {
+
+  await elementsHomePage.clickTextBoxBtn()
+  console.log(`a`)
+  await browser.pause(1000)
+  await elementsHomePage.setValueFullname()
+  await browser.pause(1000)
+  await elementsHomePage.setValueEmail()
+  await browser.pause(1000)
+  await elementsHomePage.setValueCurrentAddress()
+  await browser.pause(1000)
+  await elementsHomePage.setPermanentAddress()
+  await browser.pause(1000)
+  await browser.debug();
+  // await browser.debug();
+
+});
+
+When(/^User clicks on Elements button in Elements page$/, async function () {
+  await elementsHomePage.clickElements()
+  
+  // await browser.debug();
+  
+});
+
+ 
+
+//*[@class="header-wrapper"]//*[text()="Elements"]

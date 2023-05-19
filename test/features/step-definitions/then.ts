@@ -10,7 +10,8 @@ import reporter from "../../helper/reporter";
 import apiHelper from "../../helper/apiHelper";
 import responseBodyAfterLoginByUI from "../../../data/api-res/Book/ResponseBodyAfterLoginByUI.json"
 import profilePage from "../../page-objects/profile.Page";
-
+import elementsPage from "../../page-objects/Element/elements.page";
+import elementsHomePage from "../../page-objects/Element/elementsHome.page";
 
 Then(/^Verify that the all the book shows in page$/, async function(){
 
@@ -216,5 +217,14 @@ Then(/^Verify the book (.*) after user deleled$/, async function(titleBook){
 When(/^Verify that the book (.*) is deleted$/, async function (title) {
   
   await profilePage.getDeleteButtonByTitleAfterDele(this.testid,title)
+  // await browser.debug()
+})
+When(/^Verify that the value after click submit button$/, async function () {
+  
+  await elementsHomePage.clickSubmit()
+  await browser.pause(1000)
+  await elementsHomePage.getValueAfterClick()
+ 
   await browser.debug()
 })
+
