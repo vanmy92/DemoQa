@@ -228,3 +228,15 @@ When(/^Verify that the value after click submit button$/, async function () {
   await browser.debug()
 })
 
+
+When(/^User clicks on (.*) button to check on or off$/, async function (expandOrCollapse) {
+  
+  console.log(`user clicks on ${expandOrCollapse} button`)
+  await elementsHomePage.clickExpandBtn()
+  await browser.pause(5000)
+  await elementsHomePage.clickCollapseBtn()
+
+  
+  await browser.debug();
+  
+});

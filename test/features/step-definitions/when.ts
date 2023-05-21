@@ -829,12 +829,27 @@ When(/^User clicks on Text Box button$/, async function () {
 
 });
 
+When(/^User clicks on (.*) button$/, async function (buttons) {
+
+  if(buttons === "checkBox"){
+    await elementsHomePage.clickCheckBoxBtn();
+    await browser.pause(1000)
+  }
+    // await elementsHomePage.clickCheckBoxBtn()
+  // await browser.debug();
+
+});
+
+
 When(/^User clicks on Elements button in Elements page$/, async function () {
+  
+  if()
   await elementsHomePage.clickElements()
   
   // await browser.debug();
   
-});
+// });
+
 
  
 

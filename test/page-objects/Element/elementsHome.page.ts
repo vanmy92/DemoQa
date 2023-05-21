@@ -15,6 +15,9 @@ class ElementHomePage extends Page {
   get getTextBoxBtn() {
     return $(`//*[@class="btn btn-light "]//*[text()="Text Box"]`)
   }
+  get getCheckBoxBtn() {
+    return $(`//*[@id="item-1"]//*[text()="Check Box"]`)
+  }
   get fullnameTxt (){
     return $(`#userName`)
   }
@@ -43,12 +46,27 @@ class ElementHomePage extends Page {
     return $(`//*[@class="border col-md-12 col-sm-12"]//child::p[4]`)
   }
 
+  get expandBtn(){
+    return $(`//*[@aria-label="Expand all"]`)
+  }
+  async clickExpandBtn(){
+    await this.click(await this.expandBtn);
+  }
 
+  get collapseBtn(){
+    return $(`//*[@aria-label="Collapse all"]`)
+  }
+  async clickCollapseBtn(){
+    await this.click(await this.collapseBtn);
+  }
   async clickElements(){
     await this.click(await this.getElementsBtn);
   }
   async clickTextBoxBtn(){
     await this.click(await this.getTextBoxBtn);
+  }
+  async clickCheckBoxBtn(){
+    await this.click(await this.getCheckBoxBtn);
   }
   async setValueFullname(){
     (await this.fullnameTxt).setValue("Full Name")
@@ -81,6 +99,9 @@ class ElementHomePage extends Page {
       await this.permanentAddressTxt.setValue(value)
       console.log(`copy value from current address paste to permanentAddress: ${value}`)
     }
+  }
+  async checkHomeCheBox(){
+    
   }
 
   async clickSubmit(){
