@@ -1,7 +1,7 @@
 import { Options } from "@wdio/types";
 import chai from "chai";
 import Page from "./page";
-import reporter from "../helper/reporter";
+import reporter from "../../helper/reporter";
 
 class HomeBookStorePage extends Page {
   constructor() {

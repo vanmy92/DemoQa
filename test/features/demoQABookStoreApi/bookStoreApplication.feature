@@ -64,7 +64,7 @@ Feature: Inventory
     #     Then Verify that the book <nameOfBook> is deleted
     #     Examples:
     #         | TestID     | nameOfBook                          |
-    #     #     # | INTV_TC001 | Git Pocket Guide               |
+            # | INTV_TC001 | Git Pocket Guide               |
     #         # | INTV_TC001 | Speaking JavaScript          |
     #         # | INTV_TC001 | Designing Evolvable Web APIs with ASP.NET            |
     #         | INTV_TC001 | Git Pocket Guide |

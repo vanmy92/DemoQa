@@ -1,7 +1,7 @@
 import { Then, When } from "@wdio/cucumber-framework";
 import chai from "chai";
-import homeBookStorePage from "../../page-objects/homeBookStore.page";
-import bookDetailsPage from "../../page-objects/bookDetails.page";
+import homeBookStorePage from "../../page-objects/Books/homeBookStore.page";
+import bookDetailsPage from "../../page-objects/Books/bookDetails.page";
 import fetch from 'node-fetch';
 import generateToken from "../../../data/api-res/Account/GenerateTokenAPIByPost.json"
 import responseBodyReturn from "../../../data/api-res/Account/ResponseBodyReturn.json"
@@ -9,7 +9,7 @@ import fs from "fs";
 import reporter from "../../helper/reporter";
 import apiHelper from "../../helper/apiHelper";
 import responseBodyAfterLoginByUI from "../../../data/api-res/Book/ResponseBodyAfterLoginByUI.json"
-import profilePage from "../../page-objects/profile.Page";
+import profilePage from "../../page-objects/Books/profile.Page";
 import elementsPage from "../../page-objects/Element/elements.page";
 import elementsHomePage from "../../page-objects/Element/elementsHome.page";
 
@@ -228,14 +228,29 @@ When(/^Verify that the value after click submit button$/, async function () {
   await browser.debug()
 })
 
-
+When(/^User clicks on Elements button in Elements page$/, async function () {
+  
+  await elementsHomePage.clickElements()
+  await browser.debug()
+})
 When(/^User clicks on (.*) button to check on or off$/, async function (expandOrCollapse) {
   
   console.log(`user clicks on ${expandOrCollapse} button`)
   await elementsHomePage.clickExpandBtn()
-  await browser.pause(5000)
-  await elementsHomePage.clickCollapseBtn()
+  await browser.pause(2000)
+  await elementsHomePage.clickHomeCheckBox()
+  await browser.pause(2000)
+  let listseleted = await elementsHomePage.listResults()
+  console.log(listseleted)
+  await browser.pause(2000)
+  let listseletedWithTitle = await elementsHomePage.checkedSelected()
+  console.log(listseletedWithTitle)
 
+  await browser.pause(5000)
+
+  await elementsHomePage.clickCollapseBtn()
+  console.log(`show item clicked: ----------`)
+  
   
   await browser.debug();
   

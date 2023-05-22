@@ -14,7 +14,7 @@ Feature: Inventory
 
     Scenario: Practice in elements
         When User clicks on Elements button in Elements page
-        And User clicks on <buttons> button
+        And User clicks on <buttons> button in Home page
         Then User clicks on <expandOrCollapse> button to check on or off
 
         Examples:

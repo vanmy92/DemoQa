@@ -39,6 +39,9 @@ class ElementHomePage extends Page {
   get email2Txt(){
     return $(`#email`)
   }
+  get getHomeChecKBox(){
+    return $(`//*[@for="tree-node-home"]`)
+  }
   get curentTxt(){
     return $(`//*[@class="border col-md-12 col-sm-12"]//child::p[3]`)
   }
@@ -49,10 +52,29 @@ class ElementHomePage extends Page {
   get expandBtn(){
     return $(`//*[@aria-label="Expand all"]`)
   }
+  async clickHomeCheckBox(){
+    return this.click(await this.getHomeChecKBox)
+  }
   async clickExpandBtn(){
     await this.click(await this.expandBtn);
   }
-
+  get getSelectedText(){
+    return $$(`.text-success`)
+  }
+  get getTitleSelectedText(){
+    return $(`//*[@id="result"]//child::span[1]`)
+  }
+  async listResults() {
+    const buttonElements = $$(await this.getSelectedText.selector);
+    return buttonElements.map((element) => element.getText());
+  }
+  async checkedSelected(){
+    let title = await this.getTitleSelectedText.getText()
+    let selected = await this.listResults()
+    let convertSelectd = JSON.stringify(selected)
+    return title+convertSelectd
+    
+  }
   get collapseBtn(){
     return $(`//*[@aria-label="Collapse all"]`)
   }

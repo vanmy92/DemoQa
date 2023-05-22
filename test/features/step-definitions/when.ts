@@ -1,13 +1,13 @@
 import { When } from "@wdio/cucumber-framework";
 import chai = require("chai");
-import homePage from "../../page-objects/home.page";
-import homeBookStorePage from "../../page-objects/homeBookStore.page";
-import bookDetailsPage from "../../page-objects/bookDetails.page";
+import homePage from "../../page-objects/Books/home.page";
+import homeBookStorePage from "../../page-objects/Books/homeBookStore.page";
+import bookDetailsPage from "../../page-objects/Books/bookDetails.page";
 import reporter from "../../helper/reporter";
 import apiHelper from "../../helper/apiHelper";
 import fs from "fs";
-import loginPage from "../../page-objects/login.page";
-import profilePage from "../../page-objects/profile.Page";
+import loginPage from "../../page-objects/Books/login.page";
+import profilePage from "../../page-objects/Books/profile.Page";
 import userPass from "../../../data/userPass.json";
 import postBook from "../../../data/postBooks.json";
 import elementsPage from "../../page-objects/Element/elements.page";
@@ -829,7 +829,7 @@ When(/^User clicks on Text Box button$/, async function () {
 
 });
 
-When(/^User clicks on (.*) button$/, async function (buttons) {
+When(/^User clicks on (.*) button in Home page$/, async function (buttons) {
 
   if(buttons === "checkBox"){
     await elementsHomePage.clickCheckBoxBtn();
@@ -841,14 +841,6 @@ When(/^User clicks on (.*) button$/, async function (buttons) {
 });
 
 
-When(/^User clicks on Elements button in Elements page$/, async function () {
-  
-  if()
-  await elementsHomePage.clickElements()
-  
-  // await browser.debug();
-  
-// });
 
 
  
