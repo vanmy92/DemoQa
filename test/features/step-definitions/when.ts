@@ -840,9 +840,22 @@ When(/^User clicks on (.*) button in Home page$/, async function (buttons) {
 
 });
 
+When(/^User clicks on the (.*) dropdown button$/, async function (options) {
 
+  if(options === "Desktop"){
+    await elementsHomePage.clickDesktopOpen()
+    console.log(`user clicked on Desktop dropdown button`)
+    let checkShowAllDesktop = await elementsHomePage.checkShowDesktopDetail()
+    if(checkShowAllDesktop === true){
+    console.log(`the value to show is : ${await elementsHomePage.getNotes.getText()}, ${await elementsHomePage.getCommands.getText()}`)
+    }else{
+      console.log(`can not show the value of the desktop`)
+    }
+    await elementsHomePage.clickDesktopDropDown()
+    await browser.pause(1000)
+  }
 
+    // await elementsHomePage.clickCheckBoxBtn()
+  await browser.debug();
 
- 
-
-//*[@class="header-wrapper"]//*[text()="Elements"]
+});

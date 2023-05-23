@@ -12,14 +12,25 @@ Feature: Inventory
     #     Then Verify that the value after click submit button
 
 
-    Scenario: Practice in elements
+    # Scenario: Practice in elements, check show desktop, documents and download  DONE
+    #     When User clicks on Elements button in Elements page
+    #     And User clicks on <buttons> button in Home page
+    #     Then User clicks on <expandOrCollapse> button to check on or off
+
+    #     Examples:
+    #         | TestID     | buttons | expandOrCollapse |
+    #         | INTV_TC001 | checkBox | Expand          |
+
+
+    Scenario: Practice in elements, check show desktop, documents and download
         When User clicks on Elements button in Elements page
         And User clicks on <buttons> button in Home page
-        Then User clicks on <expandOrCollapse> button to check on or off
+        # Then User clicks on <expandOrCollapse> button to check on or off
+        And User clicks on the <options> dropdown button
 
         Examples:
-            | TestID     | buttons | expandOrCollapse |
-            | INTV_TC001 | checkBox | Expand           |
+            | TestID     | buttons  | options |
+            | INTV_TC001 | checkBox | Desktop  |
 
 
 

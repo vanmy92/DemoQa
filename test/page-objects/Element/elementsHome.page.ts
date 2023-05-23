@@ -64,6 +64,106 @@ class ElementHomePage extends Page {
   get getTitleSelectedText(){
     return $(`//*[@id="result"]//child::span[1]`)
   }
+  get getDropDownHomeOpen(){
+    return $(`//*[@class="rct-icon rct-icon-expand-open"]`)
+  }
+  get getDropDownHomeClose(){
+    return $(`//*[@class="rct-icon rct-icon-expand-close"]`)
+  }
+  
+  get getCheckDesktopDropdown(){
+    return $(`//*[text()="Desktop"]`)
+  }
+  get getCheckDocumentsDropdown(){
+    return $(`//*[text()="Documents"]`)
+  }
+  get getCheckDownloadsDropdown(){
+    return $(`//*[text()="Downloads"]`)
+  }
+  get getDesktopDropdown(){
+    return $(`//*[@for="tree-node-desktop"]`)
+  }
+  get getNotes(){
+    return $(`//*[text()="Notes"]`)
+  }
+  get getCommands(){
+    return $(`//*[text()="Commands"]`)
+  }
+  get getDocumentsDropdown(){
+    return $(`//*[text()="Documents"]`)
+  }
+  get getWorkSpaceDropdown(){
+    return $(`//*[text()="WorkSpace"]`)
+  }
+  
+  get getDesktopBtn(){
+    return $(`//*[text()="Desktop"]/../../button`)
+  }
+  get getDesktopOpen(){
+    return $(`//*[@class="rct-icon rct-icon-expand-open"]/../..//*[text()="Desktop"]`)
+  }
+  get getDesktopClose(){
+    return $(`//*[@class="rct-icon rct-icon-expand-close"]/../..//*[text()="Desktop"]`)
+  }
+  async clickDesktopOpen(){
+    await this.click(await this.getDesktopBtn);
+  }
+  async clickDesktopDropDown(){
+    await this.click(await this.getDesktopDropdown);
+  }
+  async clickNotesBtn(){
+    await this.click(await this.getNotes);
+  }
+  async clickCommandsBtn(){
+    await this.click(await this.getCommands);
+  }
+
+  async checkShowDesDocuDown(): Promise<boolean> {
+    // let elem = await $('#notDisplayed');
+      // let isDisplayed = await elem.isDisplayed();
+      // console.log(isDisplayed); // outputs: false
+    if(
+      (await this.getCheckDesktopDropdown.isDisplayed()) &&
+      (await this.getCheckDocumentsDropdown.isDisplayed()) &&
+      (await this.getCheckDownloadsDropdown.isDisplayed())
+      ){
+        return true
+      }
+    return false
+  }
+  async checkShowDesktopDetail(): Promise<boolean> {
+    // let elem = await $('#notDisplayed');
+      // let isDisplayed = await elem.isDisplayed();
+      // console.log(isDisplayed); // outputs: false
+    if(
+      (await this.getNotes.isDisplayed()) &&
+      (await this.getCommands.isDisplayed())
+      ){
+        return true
+      }
+    return false
+  }
+  async checkCheckedDesDocuDownAfterClickedAll(): Promise<boolean> {
+   
+    if(
+      (await this.getCheckDesktopDropdown.isDisplayed()) &&
+      (await this.getCheckDocumentsDropdown.isDisplayed()) &&
+      (await this.getCheckDownloadsDropdown.isDisplayed())
+      ){
+        return true
+      }
+    return false
+  }
+  
+//*[@class="rct-icon rct-icon-uncheck"]/../..//*[text()="Notes"]
+
+  async clickDropDownHomeCloseBtn(){
+    await this.click(await this.getDropDownHomeClose);
+  }
+  async clickDropDownHomeOpenBtn(){
+    await this.click(await this.getDropDownHomeOpen);
+  }
+  
   async listResults() {
     const buttonElements = $$(await this.getSelectedText.selector);
     return buttonElements.map((element) => element.getText());

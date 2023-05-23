@@ -233,6 +233,19 @@ When(/^User clicks on Elements button in Elements page$/, async function () {
   await elementsHomePage.clickElements()
   await browser.debug()
 })
+// When(/^User clicks on (.*) dropdown button$/, async function (checkBox) {
+  
+//   console.log(`user clicks on ${checkBox} dropdown button`)
+//   await elementsHomePage.clickExpandBtn()
+//   await browser.pause(2000)
+
+//   if( checkBox === "Desktop" ){
+//     await elementsHomePage.clickDesktopDesktop()
+    
+//   }
+
+//   await browser.debug()
+// })
 When(/^User clicks on (.*) button to check on or off$/, async function (expandOrCollapse) {
   
   console.log(`user clicks on ${expandOrCollapse} button`)
@@ -246,12 +259,21 @@ When(/^User clicks on (.*) button to check on or off$/, async function (expandOr
   let listseletedWithTitle = await elementsHomePage.checkedSelected()
   console.log(listseletedWithTitle)
 
-  await browser.pause(5000)
+  await browser.pause(2000)
 
   await elementsHomePage.clickCollapseBtn()
   console.log(`show item clicked: ----------`)
   
+  await elementsHomePage.clickDropDownHomeCloseBtn()
+  await browser.pause(2000)
+
+  if(await elementsHomePage.checkShowDesDocuDown()=== true){
+    console.log(`Desktop, Ducuments, Downloads Dropdown is displayed`)
+  }else{
+    console.log(`Desktop, Ducuments, Downloads Dropdown is not displayed`)
+  }
   
   await browser.debug();
   
 });
+
