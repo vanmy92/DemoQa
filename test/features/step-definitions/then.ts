@@ -12,6 +12,7 @@ import responseBodyAfterLoginByUI from "../../../data/api-res/Book/ResponseBodyA
 import profilePage from "../../page-objects/Books/profile.Page";
 import elementsPage from "../../page-objects/Element/elements.page";
 import elementsHomePage from "../../page-objects/Element/elementsHome.page";
+import webTablesPage from "../../page-objects/Element/webTables.page";
 
 Then(/^Verify that the all the book shows in page$/, async function(){
 
@@ -272,6 +273,16 @@ When(/^User clicks on (.*) button to check on or off$/, async function (expandOr
   }else{
     console.log(`Desktop, Ducuments, Downloads Dropdown is not displayed`)
   }
+  
+  await browser.debug();
+  
+});
+
+
+
+When(/^Verify that the all values in the table$/, async function () {
+  
+  await webTablesPage.saveListHeader()
   
   await browser.debug();
   

@@ -835,6 +835,10 @@ When(/^User clicks on (.*) button in Home page$/, async function (buttons) {
     await elementsHomePage.clickCheckBoxBtn();
     await browser.pause(1000)
   }
+  if(buttons === "Web Tables"){
+    await elementsHomePage.clickWebTables();
+    await browser.pause(1000)
+  }
     // await elementsHomePage.clickCheckBoxBtn()
   // await browser.debug();
 
@@ -842,6 +846,14 @@ When(/^User clicks on (.*) button in Home page$/, async function (buttons) {
 
 When(/^User clicks on the (.*) dropdown button$/, async function (options) {
 
+  await elementsHomePage.clickDrowHome()
+  await browser.pause(1000)
+  if(await elementsHomePage.checkShowDesDocuDown()=== true){
+    console.log(`Desktop, Ducuments, Downloads Dropdown is displayed`)
+  }else{
+    console.log(`Desktop, Ducuments, Downloads Dropdown is not displayed`)
+  }
+  
   if(options === "Desktop"){
     await elementsHomePage.clickDesktopOpen()
     console.log(`user clicked on Desktop dropdown button`)

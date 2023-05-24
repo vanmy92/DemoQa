@@ -64,6 +64,9 @@ class ElementHomePage extends Page {
   get getTitleSelectedText(){
     return $(`//*[@id="result"]//child::span[1]`)
   }
+  get getDrowHome(){
+    return $(`//*[text()="Home"]/../../button`)
+  }
   get getDropDownHomeOpen(){
     return $(`//*[@class="rct-icon rct-icon-expand-open"]`)
   }
@@ -104,6 +107,21 @@ class ElementHomePage extends Page {
   }
   get getDesktopClose(){
     return $(`//*[@class="rct-icon rct-icon-expand-close"]/../..//*[text()="Desktop"]`)
+  }
+  get getWebTables(){
+    return $(`//*[@class="btn btn-light "]//*[text()="Web Tables"]`)
+  }
+  get getAddBtn(){
+    return $(`#addNewRecordButton`)
+  }
+  async clickAddBtn(){
+    await this.click(await this.getAddBtn);
+  }
+  async clickWebTables(){
+    await this.click(await this.getWebTables);
+  }
+  async clickDrowHome(){
+    await this.click(await this.getDrowHome);
   }
   async clickDesktopOpen(){
     await this.click(await this.getDesktopBtn);
