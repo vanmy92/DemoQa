@@ -2,18 +2,15 @@ import { Then, When } from "@wdio/cucumber-framework";
 import chai from "chai";
 import homeBookStorePage from "../../page-objects/Books/homeBookStore.page";
 import bookDetailsPage from "../../page-objects/Books/bookDetails.page";
-import fetch from 'node-fetch';
 import generateToken from "../../../data/api-res/Account/GenerateTokenAPIByPost.json"
 import responseBodyReturn from "../../../data/api-res/Account/ResponseBodyReturn.json"
 import fs from "fs";
 import reporter from "../../helper/reporter";
 import apiHelper from "../../helper/apiHelper";
-import responseBodyAfterLoginByUI from "../../../data/api-res/Book/ResponseBodyAfterLoginByUI.json"
 import profilePage from "../../page-objects/Books/profile.Page";
-import elementsPage from "../../page-objects/Element/elements.page";
 import elementsHomePage from "../../page-objects/Element/elementsHome.page";
-import webTablesPage from "../../page-objects/Element/webTables.page";
-
+import webTablesPage from "../../page-objects/Element/WebTables/webTables.page";
+import popupAddItemPage from "../../page-objects/Element/WebTables/popupAddItem.page";
 Then(/^Verify that the all the book shows in page$/, async function(){
 
     let numberofBookStores = await homeBookStorePage.allNumberofItems()
@@ -280,11 +277,20 @@ When(/^User clicks on (.*) button to check on or off$/, async function (expandOr
 
 
 
-When(/^Verify that the all values in the table$/, async function () {
+Then(/^Verify that the all values in the table$/, async function () {
   
   await webTablesPage.saveListHeader()
-  
+  await webTablesPage.saveDataTable()
+  await webTablesPage.dataTb()
   await browser.debug();
   
 });
+Then(/^Verify that the new item is added$/, async function () {
+  
+  await webTablesPage.verifyTableAfterAction()
+  await browser.debug();
+  
+});
+
+
 

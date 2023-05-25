@@ -15,7 +15,11 @@ import elementsHomePage from "../../page-objects/Element/elementsHome.page";
 import generateToken from "../../../data/api-res/Account/GenerateTokenAPIByPost.json";
 import responseBodyReturn from "../../../data/api-res/Account/ResponseBodyReturn.json";
 import { profile } from "winston";
+import webTablesPage from "../../page-objects/Element/WebTables/webTables.page";
 // assert { type: "json" };
+import popupAddItemPage from "../../page-objects/Element/WebTables/popupAddItem.page";
+import findAndDeleteItemPage from "../../page-objects/Element/WebTables/findAndDeleteItem.page";
+
 
 When(/^User clicks on Book Store Application Button$/, async function () {
   await homePage.clickBookStoreApp();
@@ -870,4 +874,26 @@ When(/^User clicks on the (.*) dropdown button$/, async function (options) {
     // await elementsHomePage.clickCheckBoxBtn()
   await browser.debug();
 
+});
+When(/^User clicks on Add button in web table$/, async function () {
+  await webTablesPage.clickAddBtn()
+  console.log(`user clicked on Add button in web table`)
+  await browser.pause(1000)
+})  
+
+When(/^User clicks on Submit button$/, async function () {
+  await popupAddItemPage.clickSubmit()
+  console.log(`user clicked submit button`)
+  await browser.debug()
+})  
+When(/^User wants to add a new item$/, async function(){
+  await popupAddItemPage.setDefaultItem()
+  await browser.pause(2000)
+})
+When(/^User clicks on Edit button of (.*) to edit an item$/, async function (item) {
+  
+  await findAndDeleteItemPage.findAndEditItem(item)
+
+  await browser.debug();
+  
 });
