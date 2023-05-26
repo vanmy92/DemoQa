@@ -117,7 +117,7 @@ class PopUpAddItem extends Page {
       await this.setDepartment(department);
       await browser.pause(1000)
       await this.clickSubmit();
-      await browser.pause(2000)
+      await browser.pause(1000)
     } catch (err) {
       throw err;
     }

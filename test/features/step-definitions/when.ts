@@ -19,7 +19,7 @@ import webTablesPage from "../../page-objects/Element/WebTables/webTables.page";
 // assert { type: "json" };
 import popupAddItemPage from "../../page-objects/Element/WebTables/popupAddItem.page";
 import findAndDeleteItemPage from "../../page-objects/Element/WebTables/findAndDeleteItem.page";
-
+import searchBoxPage from "../../page-objects/Element/SearchBox/search.Page";
 
 When(/^User clicks on Book Store Application Button$/, async function () {
   await homePage.clickBookStoreApp();
@@ -905,6 +905,15 @@ When(/^User wants to add a list new item$/, async function(){
 When(/^User clicks on Edit button of (.*) to edit an item$/, async function (item) {
   
   await findAndDeleteItemPage.findAndEditItem(item)
+
+  await browser.debug();
+  
+});
+
+
+When(/^User wants to find (.*) in the table$/, async function (nameFind) {
+  
+  await searchBoxPage.searchItem(nameFind)
 
   await browser.debug();
   

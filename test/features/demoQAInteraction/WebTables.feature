@@ -25,20 +25,47 @@ Feature: Inventory
 
 
     # add many item in json file --> DONE 
-    Scenario: Practice in Web Table, User add a new item to the table then verify that  DONE
+    # Scenario: Practice in Web Table, User add a new item to the table then verify that  DONE
+    #     When User clicks on Elements button in Elements page
+    #     And User clicks on <buttons> button in Home page
+    #     Then Verify that the all values in the table
+    #     # And User clicks on Add button in web table
+    #     # And User wants to add a new item
+    #     And User wants to add a list new item
+    #     # And User clicks on Submit button
+    #     Then Verify that the new item is added
+
+
+    #     Examples:
+    #         | TestID     | buttons    |
+    #         | INTV_TC001 | Web Tables |
+
+
+
+
+
+
+ Scenario: Practice in Web Table, User add a new item to the table then verify that  DONE
         When User clicks on Elements button in Elements page
         And User clicks on <buttons> button in Home page
         Then Verify that the all values in the table
+        And User wants to find <nameFind> in the table
         # And User clicks on Add button in web table
         # And User wants to add a new item
-        And User wants to add a list new item
+        # And User wants to add a list new item
         # And User clicks on Submit button
-        Then Verify that the new item is added
+        # Then Verify that the new item is added
 
 
         Examples:
-            | TestID     | buttons    |
-            | INTV_TC001 | Web Tables |
+            | TestID     | buttons    | nameFind |
+            | INTV_TC001 | Web Tables | Cierra |
+
+
+
+
+
+
 
 
 
