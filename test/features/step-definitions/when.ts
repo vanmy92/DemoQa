@@ -890,6 +890,18 @@ When(/^User wants to add a new item$/, async function(){
   await popupAddItemPage.setDefaultItem()
   await browser.pause(2000)
 })
+
+
+When(/^User wants to add a list new item$/, async function(){
+  
+  // await popupAddItemPage.setInputOneItems()
+  await popupAddItemPage.enterMoreItems()
+
+  await browser.pause(2000)
+})
+
+
+
 When(/^User clicks on Edit button of (.*) to edit an item$/, async function (item) {
   
   await findAndDeleteItemPage.findAndEditItem(item)

@@ -18,3 +18,7 @@ npm i --save-dev @types/supertest
 
 
 npm install --save-dev node-fetch
+
+26/5 
+-> npm install xlsx
+npm install csv-parser

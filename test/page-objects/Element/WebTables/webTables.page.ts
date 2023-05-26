@@ -101,12 +101,12 @@ class WebTablesPage extends Page {
 
     let formattedResult = result.map((item) => {
       return {
-        [dataHeaderArray[0]]: item[0].charAt(0).toUpperCase() + item[0].slice(1),
-        [dataHeaderArray[1]]: item[1].charAt(0).toUpperCase() + item[1].slice(1),
+        [dataHeaderArray[0]]: item[0]+ item[0].slice(1),
+        [dataHeaderArray[1]]: item[1] + item[1].slice(1),
         [dataHeaderArray[2]]: item[2],
         [dataHeaderArray[3]]: item[3],
         [dataHeaderArray[4]]: item[4],
-        [dataHeaderArray[5]]: item[5].charAt(0).toUpperCase() + item[5].slice(1),
+        [dataHeaderArray[5]]: item[5] + item[5].slice(1),
         [dataHeaderArray[6]]: ""
       }
     });

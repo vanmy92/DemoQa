@@ -282,6 +282,7 @@ Then(/^Verify that the all values in the table$/, async function () {
   await webTablesPage.saveListHeader()
   await webTablesPage.saveDataTable()
   await webTablesPage.dataTb()
+  // await popupAddItemPage.read()
   await browser.debug();
   
 });
