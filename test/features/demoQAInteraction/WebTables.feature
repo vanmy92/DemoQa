@@ -44,26 +44,31 @@ Feature: Inventory
 
 
 
+# using example datatable
+#  Scenario: Practice in Web Table, User finds items in the table    DONE
+#         When User clicks on Elements button in Elements page
+#         And User clicks on <buttons> button in Home page
+#         Then Verify that the all values in the table
+#         And User wants to find <nameFind> in the table
 
- Scenario: Practice in Web Table, User add a new item to the table then verify that  DONE
+
+#         Examples:
+#             | TestID     | buttons    | nameFind |
+#             | INTV_TC001 | Web Tables | alasdfasdf |
+#             | INTV_TC001 | Web Tables | Cantrell |
+            
+
+
+# using datatable from json file
+ Scenario: Practice in Web Table, User finds items in the table    DONE
         When User clicks on Elements button in Elements page
         And User clicks on <buttons> button in Home page
         Then Verify that the all values in the table
-        And User wants to find <nameFind> in the table
-        # And User clicks on Add button in web table
-        # And User wants to add a new item
-        # And User wants to add a list new item
-        # And User clicks on Submit button
-        # Then Verify that the new item is added
+        And User wants to find items in the table by reading json file
 
-
-        Examples:
-            | TestID     | buttons    | nameFind |
-            | INTV_TC001 | Web Tables | alasdfasdf |
-
-
-
-
+Examples:
+            | TestID     | buttons    |
+            | INTV_TC001 | Web Tables | 
 
 
 

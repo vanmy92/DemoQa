@@ -20,22 +20,50 @@ class SearchBoxPage extends Page {
     await this.getSearchBox.setValue(item);
     await browser.pause(2000);
     console.log(`----------1.1-------`);
-    console.log(`first`)
+    console.log(`first`);
     await webTablesPage.verifyTableAfterAction();
     await browser.pause(1000);
-    let check = await webTablesPage.checkDataEmpty()
+    let check = await webTablesPage.checkDataEmpty();
     console.log(`----------1.2-------`);
 
-    if ( check === true) {
-      console.log(`find the item: `)
+    if (check === true) {
+      console.log(`find the item: `);
       await webTablesPage.verifyTableAfterAction();
       return true;
-    } else { 
+    } else {
       console.log(`-----------------`);
       console.log(`can not find the ${item} item`);
       return false;
     }
   }
+  async searchItemByJsonFile(){
+    let fileData = `${process.cwd()}/data/fileUpload/WebTables/finditems.json`;
+    let data = await writeRead.readFileWithCallback(fileData);
+    let dataConvert = JSON.parse(data);
+    for (let i= 0; i< dataConvert.length;i++) {
+      let name = dataConvert[i].nameFind
+      await this.getSearchBox.setValue(name);
+      await webTablesPage.verifyTableAfterAction();
+      await browser.pause(1000);
+      let check = await webTablesPage.checkDataEmpty();
+      console.log(`----------1.2-------`);
+
+      if (check === true) {
+        console.log(`find the item will match with ${name}  `);
+        await webTablesPage.verifyTableAfterAction();
+      } else {
+        console.log(`-----------------`);
+        console.log(`can not find the ${name} item`);
+      }
+      await browser.keys(["Control", "A"]);
+      await browser.pause(1000)
+      await browser.keys("Delete");
+      await browser.pause(1000)
+    }
+  
+
+  }
+
 
   //   async searchItem(item:string) {
   //   let fileData = `${process.cwd()}/data/api-res/Elements/WebTables/allDataTable.json`;

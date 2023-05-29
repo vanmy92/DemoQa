@@ -29,7 +29,7 @@ class WebTablesPage extends Page {
   get getdatatable() {
     return $$(`//*[@class="rt-td"]`);
   }
-  
+
   async saveDataTable() {
     let condition = await this.getListHeader.length;
     // console.log(condition)
@@ -87,7 +87,7 @@ class WebTablesPage extends Page {
     const dataDataArray = JSON.parse(dataDt);
     for (let i = 0; i < dataDt.length; i += condition) {
       let subArray = dataDataArray.slice(i, i + condition);
-      if(subArray.length === 0){
+      if (subArray.length === 0) {
         break;
       }
       result.push(subArray);
@@ -101,41 +101,38 @@ class WebTablesPage extends Page {
 
     let formattedResult = result.map((item) => {
       return {
-        [dataHeaderArray[0]]: item[0]+ item[0].slice(1),
+        [dataHeaderArray[0]]: item[0] + item[0].slice(1),
         [dataHeaderArray[1]]: item[1] + item[1].slice(1),
         [dataHeaderArray[2]]: item[2],
         [dataHeaderArray[3]]: item[3],
         [dataHeaderArray[4]]: item[4],
         [dataHeaderArray[5]]: item[5] + item[5].slice(1),
-        [dataHeaderArray[6]]: ""
-      }
+        [dataHeaderArray[6]]: "",
+      };
     });
-    
+
     console.log(formattedResult);
-    let allData = JSON.stringify(formattedResult)
+    let allData = JSON.stringify(formattedResult);
     let fileHeader = `${process.cwd()}/data/api-res/Elements/WebTables/allDataTable.json`;
     await WritePage.writeFileWithCallback(fileHeader, allData);
-
   }
-  async checkDataEmpty() : Promise<boolean>  {
+  async checkDataEmpty(): Promise<boolean> {
     let fileHeader = `${process.cwd()}/data/api-res/Elements/WebTables/allDataTable.json`;
-    let readData =await writeRead.readFileWithCallback(fileHeader)
-   
+    let readData = await writeRead.readFileWithCallback(fileHeader);
 
-    if( (JSON.parse(readData).length) === 0) {
+    if (JSON.parse(readData).length === 0) {
       return false;
-    }else{
+    } else {
       return true;
     }
   }
 
-
-  async verifyTableAfterAction() : Promise<boolean>  {
-    await this.saveDataTable()
-    await browser.pause(1500)
-    await this.dataTb()
-    await browser.pause(1500)
-    return true
+  async verifyTableAfterAction(): Promise<boolean> {
+    await this.saveDataTable();
+    await browser.pause(1500);
+    await this.dataTb();
+    await browser.pause(1500);
+    return true;
   }
 
   async clickAddBtn() {
