@@ -59,7 +59,7 @@ Feature: Inventory
 
         Examples:
             | TestID     | buttons    | nameFind |
-            | INTV_TC001 | Web Tables | Cierra |
+            | INTV_TC001 | Web Tables | alasdfasdf |
 
 
 

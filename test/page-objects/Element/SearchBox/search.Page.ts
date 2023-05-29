@@ -12,15 +12,29 @@ class SearchBoxPage extends Page {
     return $(`#searchBox`);
   }
 
-  async searchItem(item: string) {
-    await this.getSearchBox.setValue(item)
-    await browser.pause(2000)
-    console.log(`-----------------`)
-    await webTablesPage.verifyTableAfterAction()
-    console.log(`-----------------`)
-    await browser.debug()
+  get getNotFound() {
+    return $(`//*[@class="rt-noData"]`).getText();
+  }
 
+  async searchItem(item: string): Promise<boolean> {
+    await this.getSearchBox.setValue(item);
+    await browser.pause(2000);
+    console.log(`----------1.1-------`);
+    console.log(`first`)
+    await webTablesPage.verifyTableAfterAction();
+    await browser.pause(1000);
+    let check = await webTablesPage.checkDataEmpty()
+    console.log(`----------1.2-------`);
 
+    if ( check === true) {
+      console.log(`find the item: `)
+      await webTablesPage.verifyTableAfterAction();
+      return true;
+    } else { 
+      console.log(`-----------------`);
+      console.log(`can not find the ${item} item`);
+      return false;
+    }
   }
 
   //   async searchItem(item:string) {

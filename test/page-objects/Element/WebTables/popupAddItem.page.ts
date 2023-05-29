@@ -5,9 +5,7 @@ import onedatatables from "../../../../../DemoQa/data/fileUpload/WebTables/oneda
 import moredatatables from "../../../../../DemoQa/data/fileUpload/WebTables/moredatatables.json";
 import webTablesPage from "./webTables.page";
 import fs from "fs";
-import * as csv from "csv-parser";
-import * as Excel from "exceljs";
-import JSZip from 'jszip';
+
 class PopUpAddItem extends Page {
   constructor() {
     super();
@@ -139,50 +137,50 @@ class PopUpAddItem extends Page {
   }
 
 
-  async  readZipFile(filepath: string): Promise<any[][]> {
-    const zip = new JSZip();
-    try {
-      const data = await zip.loadAsync(filepath);
-      const file = data.files[Object.keys(data.files)[0]];
-      const content = await file.async('text');
-      const lines = content.split('\n');
-      const result: any[][] = [];
-      for (let i = 0; i < lines.length; i++) {
-        const row = lines[i].split(',');
-        result.push(row);
-      }
-      return result;
-    } catch (error) {
-      console.error(`Error reading zip file: ${error}`);
-      throw error;
-    }
-  }
+  // async  readZipFile(filepath: string): Promise<any[][]> {
+  //   const zip = new JSZip();
+  //   try {
+  //     const data = await zip.loadAsync(filepath);
+  //     const file = data.files[Object.keys(data.files)[0]];
+  //     const content = await file.async('text');
+  //     const lines = content.split('\n');
+  //     const result: any[][] = [];
+  //     for (let i = 0; i < lines.length; i++) {
+  //       const row = lines[i].split(',');
+  //       result.push(row);
+  //     }
+  //     return result;
+  //   } catch (error) {
+  //     console.error(`Error reading zip file: ${error}`);
+  //     throw error;
+  //   }
+  // }
 
 
-  async getExcel_data(filepath: string, sheetName: string): Promise<any[][]> {
-    const workbook = new Excel.Workbook();
-    try {
-      await workbook.xlsx.readFile(filepath);
-      const worksheet = workbook.getWorksheet(sheetName);
-      if (!worksheet) {
-        throw new Error(`Worksheet ${sheetName} not found in file ${filepath}.`);
-      }
-      const rows = worksheet.rowCount;
-      const data: any[][] = [];
-      for (let i = 1; i <= rows; i++) {
-        const row = worksheet.getRow(i);
-        const rowData: any[] = [];
-        row.eachCell((cell) => {
-          rowData.push(cell.value);
-        });
-        data.push(rowData);
-      }
-      return data;
-    } catch (error) {
-      console.error(`Error reading Excel file: ${error}`);
-      throw error;
-    }
-  }
+  // async getExcel_data(filepath: string, sheetName: string): Promise<any[][]> {
+  //   const workbook = new Excel.Workbook();
+  //   try {
+  //     await workbook.xlsx.readFile(filepath);
+  //     const worksheet = workbook.getWorksheet(sheetName);
+  //     if (!worksheet) {
+  //       throw new Error(`Worksheet ${sheetName} not found in file ${filepath}.`);
+  //     }
+  //     const rows = worksheet.rowCount;
+  //     const data: any[][] = [];
+  //     for (let i = 1; i <= rows; i++) {
+  //       const row = worksheet.getRow(i);
+  //       const rowData: any[] = [];
+  //       row.eachCell((cell) => {
+  //         rowData.push(cell.value);
+  //       });
+  //       data.push(rowData);
+  //     }
+  //     return data;
+  //   } catch (error) {
+  //     console.error(`Error reading Excel file: ${error}`);
+  //     throw error;
+  //   }
+  // }
 
 //   async read() {
 //     const filepath = `${process.cwd()}/data/fileUpload/WebTables/moreitemsExcel.csv`;
@@ -192,12 +190,12 @@ class PopUpAddItem extends Page {
 //     await browser.debug();
 //   }
 
-  async read() {
-    const filepath = `${process.cwd()}/data/fileUpload/WebTables/moreitemsExcel.csv`;
-    const data = await this.readZipFile(filepath);
-    console.log(data);
-    await browser.debug();
-  }
+  // async read() {
+  //   const filepath = `${process.cwd()}/data/fileUpload/WebTables/moreitemsExcel.csv`;
+  //   const data = await this.readZipFile(filepath);
+  //   console.log(data);
+  //   await browser.debug();
+  // }
 
   async clickSubmit() {
     await this.click(await this.getSubmitBtn);

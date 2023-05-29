@@ -283,7 +283,10 @@ Then(/^Verify that the all values in the table$/, async function () {
   await webTablesPage.saveDataTable()
   await webTablesPage.dataTb()
   // await popupAddItemPage.read()
-  await browser.debug();
+
+  await browser.pause(2000)
+
+  // await browser.debug();
   
 });
 Then(/^Verify that the new item is added$/, async function () {

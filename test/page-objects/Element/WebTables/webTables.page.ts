@@ -92,9 +92,9 @@ class WebTablesPage extends Page {
       }
       result.push(subArray);
     }
-    console.log(dataHeaderArray);
-    console.log(result);
-    console.log(result.length)
+    // console.log(dataHeaderArray);
+    // console.log(result);
+    // console.log(result.length)
 
     // let combine = result.unshift(dataHeaderArray)
     // console.log(combine)
@@ -117,12 +117,25 @@ class WebTablesPage extends Page {
     await WritePage.writeFileWithCallback(fileHeader, allData);
 
   }
+  async checkDataEmpty() : Promise<boolean>  {
+    let fileHeader = `${process.cwd()}/data/api-res/Elements/WebTables/allDataTable.json`;
+    let readData =await writeRead.readFileWithCallback(fileHeader)
+   
 
-  async verifyTableAfterAction(){
+    if( (JSON.parse(readData).length) === 0) {
+      return false;
+    }else{
+      return true;
+    }
+  }
+
+
+  async verifyTableAfterAction() : Promise<boolean>  {
     await this.saveDataTable()
     await browser.pause(1500)
     await this.dataTb()
     await browser.pause(1500)
+    return true
   }
 
   async clickAddBtn() {
