@@ -44,6 +44,27 @@ Feature: Inventory
 
 
 
+    # add many item in csv file   -> NOT DONE
+    # Scenario: Practice in Web Table, User add a new item to the table then verify that  DONE
+    #     When User clicks on Elements button in Elements page
+    #     And User clicks on <buttons> button in Home page
+    #     Then Verify that the all values in the table
+    #     And User wants to add a list new item by using CSV file
+    #     # And User clicks on Submit button
+    #     # Then Verify that the new item is added
+
+
+    #     Examples:
+    #         | TestID     | buttons    |
+    #         | INTV_TC001 | Web Tables |
+
+
+
+
+
+
+
+
 # using example datatable
 #  Scenario: Practice in Web Table, User finds items in the table    DONE
 #         When User clicks on Elements button in Elements page
@@ -59,16 +80,32 @@ Feature: Inventory
             
 
 
-# using datatable from json file
- Scenario: Practice in Web Table, User finds items in the table    DONE
+# using example datatable
+ Scenario: Practice in Web Table, User finds items in the table then user wants delete it   
         When User clicks on Elements button in Elements page
         And User clicks on <buttons> button in Home page
         Then Verify that the all values in the table
-        And User wants to find items in the table by reading json file
+        And User wants to find <nameFind> in the table
+        And User wants to delete <nameFind> in the table
 
-Examples:
-            | TestID     | buttons    |
-            | INTV_TC001 | Web Tables | 
+
+        Examples:
+            | TestID     | buttons    | nameFind |
+            | INTV_TC001 | Web Tables | 000 |
+
+
+
+
+# using datatable from json file
+#  Scenario: Practice in Web Table, User finds items in the table    DONE
+#         When User clicks on Elements button in Elements page
+#         And User clicks on <buttons> button in Home page
+#         Then Verify that the all values in the table
+#         And User wants to find items in the table by reading json file
+
+# Examples:
+#             | TestID     | buttons    |
+#             | INTV_TC001 | Web Tables | 
 
 
 

@@ -34,6 +34,7 @@
     "winston": "^3.8.2"
   },
   "dependencies": {
+    "csv-parse": "^5.4.0",
     "csv-parser": "^3.0.0",
     "exceljs": "^4.3.0",
     "xlsx": "^0.18.5"

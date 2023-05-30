@@ -900,6 +900,15 @@ When(/^User wants to add a list new item$/, async function(){
   await browser.pause(2000)
 })
 
+When(/^User wants to add a list new item by using CSV file$/, async function(){
+  
+  // await popupAddItemPage.setInputOneItems()
+  await popupAddItemPage.read()
+
+  await browser.pause(2000)
+})
+
+
 
 
 When(/^User clicks on Edit button of (.*) to edit an item$/, async function (item) {
@@ -922,6 +931,15 @@ When(/^User wants to find (.*) in the table$/, async function (nameFind) {
 When(/^User wants to find items in the table by reading json file$/, async function () {
   
   await searchPage.searchItemByJsonFile()
+  // await browser.debug();
+  await browser.pause(3000)
+  
+});
+
+When(/^User wants to delete (.*) in the table$/, async function (nameFind) {
+  
+  await searchPage.searchAndDelete(nameFind)
+
   await browser.debug();
   
 });

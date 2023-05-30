@@ -27,8 +27,10 @@ class SearchBoxPage extends Page {
     console.log(`----------1.2-------`);
 
     if (check === true) {
-      console.log(`find the item: `);
+      console.log(`find the item 11111: `);
+      
       await webTablesPage.verifyTableAfterAction();
+      console.log(`find the item 22222: `);
       return true;
     } else {
       console.log(`-----------------`);
@@ -36,12 +38,71 @@ class SearchBoxPage extends Page {
       return false;
     }
   }
-  async searchItemByJsonFile(){
+
+  // no or 1 items found
+
+  // async searchAndDelete(nameFind: string) {
+  //   if ((await this.searchItem(nameFind)) === true) {
+  //     console.log(`finded item:`);
+  //     console.log(`edit item:`);
+  //     //find the parent of the delete button
+  //     //*[text()="Alden"]/..//div/div//*[@title="Edit"]
+  //     let editbtn = await $(
+  //       `//div[contains(text(), '${nameFind}')]/..//div//div//span[@title="Delete"]`
+  //     );
+  //     await editbtn.click();
+  //     console.log(`-`);
+  //     console.log(`the ${nameFind} is deleted`);
+  //     await browser.pause(2000);
+  //   } else {
+  //     console.log(`can not find the ${nameFind} item to delete`);
+  //   }
+  // }
+  async searchAndDelete(nameFind: string) {
+    if ((await this.searchItem(nameFind)) === true) {
+      console.log(`finded item:`);
+      console.log(`edit item:`);
+      //find the parent of the delete button
+      //*[text()="Alden"]/..//div/div//*[@title="Edit"]
+      
+      let fileHeader = `${process.cwd()}/data/api-res/Elements/WebTables/allDataTableAterDeOrFindOrEdit.json`;
+      let dataDt = await writeRead.readFileWithCallback(fileHeader);
+      const dataDataArray = JSON.parse(dataDt);
+      // console.log(`check to delete 1`)
+      // console.log(dataDataArray)
+      // console.log(dataDataArray.length)
+      // console.log(`check to delete 2`)
+      for(let i=0; i<dataDataArray.length; i++) {
+        // console.log(`check to delete 3`)
+         let editbtn = await $(
+        `//div[contains(text(), '${dataDataArray[i].Age}')]/..//div//div//span[@title="Delete"]`
+        );
+        await editbtn.click();
+        await browser.pause(3000)
+      }
+      await this.getSearchBox.click()
+      await browser.keys(["Control", "A"]);
+      await browser.pause(1000);
+      await browser.keys("Delete");
+      await browser.pause(1000);
+      console.log(`-`);
+      console.log(`the all items relative to ${nameFind} is deleted`);
+      console.log(`Get data after delete`)
+      await webTablesPage.dataEndAction()
+      await browser.pause(2000);
+    } else {
+      console.log(`can not find the ${nameFind} item to delete`);
+      console.log(`enter more value to find and delete it`)
+    }
+  }
+
+
+  async searchItemByJsonFile() {
     let fileData = `${process.cwd()}/data/fileUpload/WebTables/finditems.json`;
     let data = await writeRead.readFileWithCallback(fileData);
     let dataConvert = JSON.parse(data);
-    for (let i= 0; i< dataConvert.length;i++) {
-      let name = dataConvert[i].nameFind
+    for (let i = 0; i < dataConvert.length; i++) {
+      let name = dataConvert[i].nameFind;
       await this.getSearchBox.setValue(name);
       await webTablesPage.verifyTableAfterAction();
       await browser.pause(1000);
@@ -56,14 +117,11 @@ class SearchBoxPage extends Page {
         console.log(`can not find the ${name} item`);
       }
       await browser.keys(["Control", "A"]);
-      await browser.pause(1000)
+      await browser.pause(1000);
       await browser.keys("Delete");
-      await browser.pause(1000)
+      await browser.pause(1000);
     }
-  
-
   }
-
 
   //   async searchItem(item:string) {
   //   let fileData = `${process.cwd()}/data/api-res/Elements/WebTables/allDataTable.json`;

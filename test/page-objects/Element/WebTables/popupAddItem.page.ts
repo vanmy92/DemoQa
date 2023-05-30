@@ -5,7 +5,8 @@ import onedatatables from "../../../../../DemoQa/data/fileUpload/WebTables/oneda
 import moredatatables from "../../../../../DemoQa/data/fileUpload/WebTables/moredatatables.json";
 import webTablesPage from "./webTables.page";
 import fs from "fs";
-
+import * as csvParse from "csv-parse";
+import csv from 'csv-parser';
 class PopUpAddItem extends Page {
   constructor() {
     super();
@@ -101,21 +102,21 @@ class PopUpAddItem extends Page {
   ) {
     try {
       await webTablesPage.clickAddBtn();
-      await browser.pause(1000)
+      await browser.pause(1000);
       await this.setFirstName(firstname);
-      await browser.pause(1000)
+      await browser.pause(1000);
       await this.setLastName(lastname);
-      await browser.pause(1000)
+      await browser.pause(1000);
       await this.setEmail(email);
-      await browser.pause(1000)
+      await browser.pause(1000);
       await this.setAge(age);
-      await browser.pause(1000)
+      await browser.pause(1000);
       await this.setSalary(salary);
-      await browser.pause(1000)
+      await browser.pause(1000);
       await this.setDepartment(department);
-      await browser.pause(1000)
+      await browser.pause(1000);
       await this.clickSubmit();
-      await browser.pause(1000)
+      await browser.pause(1000);
     } catch (err) {
       throw err;
     }
@@ -135,8 +136,7 @@ class PopUpAddItem extends Page {
     await browser.pause(1000);
     await this.getDepartment.setValue("Administ");
   }
-
-
+  
   // async  readZipFile(filepath: string): Promise<any[][]> {
   //   const zip = new JSZip();
   //   try {
@@ -155,7 +155,6 @@ class PopUpAddItem extends Page {
   //     throw error;
   //   }
   // }
-
 
   // async getExcel_data(filepath: string, sheetName: string): Promise<any[][]> {
   //   const workbook = new Excel.Workbook();
@@ -182,20 +181,56 @@ class PopUpAddItem extends Page {
   //   }
   // }
 
-//   async read() {
-//     const filepath = `${process.cwd()}/data/fileUpload/WebTables/moreitemsExcel.csv`;
-//     const sheetName = 'Sheet1';
-//     const data = await this.getExcel_data(filepath, sheetName);
-//     console.log(data);
-//     await browser.debug();
-//   }
+  //   async read() {
+  //     const filepath = `${process.cwd()}/data/fileUpload/WebTables/moreitemsExcel.csv`;
+  //     const sheetName = 'Sheet1';
+  //     const data = await this.getExcel_data(filepath, sheetName);
+  //     console.log(data);
+  //     await browser.debug();
+  //   }
 
-  // async read() {
-  //   const filepath = `${process.cwd()}/data/fileUpload/WebTables/moreitemsExcel.csv`;
-  //   const data = await this.readZipFile(filepath);
-  //   console.log(data);
-  //   await browser.debug();
-  // }
+  
+
+  async read() {
+
+    interface Employee {
+      firstName: string;
+      lastName: string;
+      email: string;
+      age: number;
+      salary: number;
+      department: string;
+    }
+
+    const filepath = `${process.cwd()}/data/fileUpload/WebTables/moreitemsExcel.csv`;
+
+    
+
+    const employees: Employee[] = [];
+        fs.createReadStream(filepath)
+      .pipe(csv())
+      .on("data", (row: any) => {
+        const employee: Employee = {
+          firstName: row.First_Name,
+          lastName: row.Last_Name,
+          email: row.Email,
+          age: parseInt(row.Age),
+          salary: parseInt(row.Salary),
+          department: row.Department
+        };
+        employees.push(employee);
+      })
+      .on("end", () => {
+        console.log(`1`)
+        console.log(employees); // Display the parsed data
+        console.log(`2`)
+      
+      });
+
+
+    await browser.pause(5000);
+
+  }
 
   async clickSubmit() {
     await this.click(await this.getSubmitBtn);
@@ -205,3 +240,5 @@ class PopUpAddItem extends Page {
 }
 
 export default new PopUpAddItem();
+
+
