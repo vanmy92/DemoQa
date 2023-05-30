@@ -91,7 +91,7 @@ Feature: Inventory
 
         Examples:
             | TestID     | buttons    | nameFind |
-            | INTV_TC001 | Web Tables | 000 |
+            | INTV_TC001 | Web Tables | comp |
 
 
 
