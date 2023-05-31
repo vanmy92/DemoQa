@@ -903,9 +903,11 @@ When(/^User wants to add a list new item$/, async function(){
 When(/^User wants to add a list new item by using CSV file$/, async function(){
   
   // await popupAddItemPage.setInputOneItems()
-  await popupAddItemPage.read()
+  await popupAddItemPage.enterMoreItems_2()
 
   await browser.pause(2000)
+  await browser.debug();
+
 })
 
 

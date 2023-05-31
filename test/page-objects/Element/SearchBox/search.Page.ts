@@ -62,18 +62,13 @@ class SearchBoxPage extends Page {
     if ((await this.searchItem(nameFind)) === true) {
       console.log(`finded item:`);
       console.log(`edit item:`);
-      //find the parent of the delete button
-      //*[text()="Alden"]/..//div/div//*[@title="Edit"]
+      
       
       let fileHeader = `${process.cwd()}/data/api-res/Elements/WebTables/allDataTableAterDeOrFindOrEdit.json`;
       let dataDt = await writeRead.readFileWithCallback(fileHeader);
       const dataDataArray = JSON.parse(dataDt);
-      // console.log(`check to delete 1`)
-      // console.log(dataDataArray)
-      // console.log(dataDataArray.length)
-      // console.log(`check to delete 2`)
+   
       for(let i=0; i<dataDataArray.length; i++) {
-        // console.log(`check to delete 3`)
          let editbtn = await $(
         `//div[contains(text(), '${dataDataArray[i].Age}')]/..//div//div//span[@title="Delete"]`
         );

@@ -29,10 +29,7 @@ Feature: Inventory
     #     When User clicks on Elements button in Elements page
     #     And User clicks on <buttons> button in Home page
     #     Then Verify that the all values in the table
-    #     # And User clicks on Add button in web table
-    #     # And User wants to add a new item
     #     And User wants to add a list new item
-    #     # And User clicks on Submit button
     #     Then Verify that the new item is added
 
 
@@ -44,19 +41,18 @@ Feature: Inventory
 
 
 
-    # add many item in csv file   -> NOT DONE
-    # Scenario: Practice in Web Table, User add a new item to the table then verify that  DONE
-    #     When User clicks on Elements button in Elements page
-    #     And User clicks on <buttons> button in Home page
-    #     Then Verify that the all values in the table
-    #     And User wants to add a list new item by using CSV file
-    #     # And User clicks on Submit button
-    #     # Then Verify that the new item is added
+    # add many item in csv file   ->  DONE
+    Scenario: Practice in Web Table, User add a new item to the table then verify that  DONE
+        When User clicks on Elements button in Elements page
+        And User clicks on <buttons> button in Home page
+        Then Verify that the all values in the table
+        And User wants to add a list new item by using CSV file
+        Then Verify that the new item is added
 
 
-    #     Examples:
-    #         | TestID     | buttons    |
-    #         | INTV_TC001 | Web Tables |
+        Examples:
+            | TestID     | buttons    |
+            | INTV_TC001 | Web Tables |
 
 
 
@@ -80,18 +76,18 @@ Feature: Inventory
             
 
 
-# using example datatable
- Scenario: Practice in Web Table, User finds items in the table then user wants delete it   
-        When User clicks on Elements button in Elements page
-        And User clicks on <buttons> button in Home page
-        Then Verify that the all values in the table
-        And User wants to find <nameFind> in the table
-        And User wants to delete <nameFind> in the table
+# using example datatable   DONE
+#  Scenario: Practice in Web Table, User finds items in the table then user wants delete it   
+#         When User clicks on Elements button in Elements page
+#         And User clicks on <buttons> button in Home page
+#         Then Verify that the all values in the table
+#         And User wants to find <nameFind> in the table
+#         And User wants to delete <nameFind> in the table
 
 
-        Examples:
-            | TestID     | buttons    | nameFind |
-            | INTV_TC001 | Web Tables | comp |
+#         Examples:
+#             | TestID     | buttons    | nameFind |
+#             | INTV_TC001 | Web Tables | comp |
 
 
 

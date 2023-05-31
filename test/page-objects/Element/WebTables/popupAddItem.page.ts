@@ -3,10 +3,12 @@ import chai from "chai";
 import Page from "../page";
 import onedatatables from "../../../../../DemoQa/data/fileUpload/WebTables/onedatatables.json";
 import moredatatables from "../../../../../DemoQa/data/fileUpload/WebTables/moredatatables.json";
+
 import webTablesPage from "./webTables.page";
 import fs from "fs";
 import * as csvParse from "csv-parse";
-import csv from 'csv-parser';
+import csv from "csv-parser";
+import { parse } from "csv-parse";
 class PopUpAddItem extends Page {
   constructor() {
     super();
@@ -102,21 +104,21 @@ class PopUpAddItem extends Page {
   ) {
     try {
       await webTablesPage.clickAddBtn();
-      await browser.pause(1000);
+      await browser.pause(500);
       await this.setFirstName(firstname);
-      await browser.pause(1000);
+      await browser.pause(500);
       await this.setLastName(lastname);
-      await browser.pause(1000);
+      await browser.pause(500);
       await this.setEmail(email);
-      await browser.pause(1000);
+      await browser.pause(500);
       await this.setAge(age);
-      await browser.pause(1000);
+      await browser.pause(500);
       await this.setSalary(salary);
-      await browser.pause(1000);
+      await browser.pause(500);
       await this.setDepartment(department);
-      await browser.pause(1000);
+      await browser.pause(500);
       await this.clickSubmit();
-      await browser.pause(1000);
+      await browser.pause(500);
     } catch (err) {
       throw err;
     }
@@ -136,7 +138,7 @@ class PopUpAddItem extends Page {
     await browser.pause(1000);
     await this.getDepartment.setValue("Administ");
   }
-  
+
   // async  readZipFile(filepath: string): Promise<any[][]> {
   //   const zip = new JSZip();
   //   try {
@@ -189,10 +191,7 @@ class PopUpAddItem extends Page {
   //     await browser.debug();
   //   }
 
-  
-
-  async read() {
-
+  async read_1() {
     interface Employee {
       firstName: string;
       lastName: string;
@@ -204,10 +203,8 @@ class PopUpAddItem extends Page {
 
     const filepath = `${process.cwd()}/data/fileUpload/WebTables/moreitemsExcel.csv`;
 
-    
-
     const employees: Employee[] = [];
-        fs.createReadStream(filepath)
+    fs.createReadStream(filepath)
       .pipe(csv())
       .on("data", (row: any) => {
         const employee: Employee = {
@@ -216,20 +213,63 @@ class PopUpAddItem extends Page {
           email: row.Email,
           age: parseInt(row.Age),
           salary: parseInt(row.Salary),
-          department: row.Department
+          department: row.Department,
         };
         employees.push(employee);
       })
       .on("end", () => {
-        console.log(`1`)
+        console.log(`1`);
         console.log(employees); // Display the parsed data
-        console.log(`2`)
-      
+        console.log(`2`);
       });
 
-
     await browser.pause(5000);
+  }
 
+  
+  
+  async readCSVFile(filepath: string): Promise<any[]> {
+    const results: any[] = [];
+    return new Promise((resolve, reject) => {
+      fs.createReadStream(filepath)
+      .pipe(csv({
+        separator: '\t'
+      }))
+        .on("data", (data: any) => results.push(data))
+        .on("end", () => resolve(results))
+        .on("error", (error: any) => reject(error));
+    });
+  }
+
+  async read_2() {
+    const filepath: string = `${process.cwd()}/data/fileUpload/WebTables/moreitemsExcel.csv`;
+    console.log(typeof filepath)
+    console.log(`abcd`)
+
+    let data= await this.readCSVFile(filepath)
+    console.log(data)
+    await browser.pause(5000);
+  }
+
+  async enterMoreItems_2() {
+    try {
+      const filepath: string = `${process.cwd()}/data/fileUpload/WebTables/moreitemsExcel.csv`;
+      let data= await this.readCSVFile(filepath)
+  
+      for (const item of data) {
+        
+        const { 'First Name': firstName, 'Last Name': lastName, Age: age, Email: email, Salary: salary, Department: department } = item;
+        
+        if (!firstName) {
+          console.log('First Name is empty, exiting loop.');
+          break;
+        }
+        await this.setInputMoreItems(firstName, lastName, email, age, salary, department);
+        await browser.pause(500);
+      }
+    } catch (err) {
+      throw err;
+    }
   }
 
   async clickSubmit() {
@@ -240,5 +280,3 @@ class PopUpAddItem extends Page {
 }
 
 export default new PopUpAddItem();
-
-
