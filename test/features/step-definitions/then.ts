@@ -226,11 +226,7 @@ When(/^Verify that the value after click submit button$/, async function () {
   await browser.debug()
 })
 
-When(/^User clicks on Elements button in Elements page$/, async function () {
-  
-  await elementsHomePage.clickElements()
-  await browser.debug()
-})
+
 // When(/^User clicks on (.*) dropdown button$/, async function (checkBox) {
   
 //   console.log(`user clicks on ${checkBox} dropdown button`)

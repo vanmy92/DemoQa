@@ -1,7 +1,7 @@
 import { Options } from "@wdio/types";
 import chai from "chai";
 import Page from "./page";
-
+import helperModule from "../../../src/helper"
 import fs from "fs";
 
 class ElementHomePage extends Page {

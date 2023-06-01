@@ -899,7 +899,11 @@ When(/^User wants to add a list new item$/, async function(){
 
   await browser.pause(2000)
 })
-
+When(/^When User clicks on Elements button in Elements page$/, async function () {
+  
+  await elementsHomePage.clickElements()
+  await browser.debug()
+})
 When(/^User wants to add a list new item by using CSV file$/, async function(){
   
   // await popupAddItemPage.setInputOneItems()

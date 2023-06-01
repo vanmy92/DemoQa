@@ -43,7 +43,7 @@ Feature: Inventory
 
     # add many item in csv file   ->  DONE
     Scenario: Practice in Web Table, User add a new item to the table then verify that  DONE
-        When User clicks on Elements button in Elements page
+        When When User clicks on Elements button in Elements page
         And User clicks on <buttons> button in Home page
         Then Verify that the all values in the table
         And User wants to add a list new item by using CSV file

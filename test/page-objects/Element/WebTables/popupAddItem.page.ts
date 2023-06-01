@@ -265,13 +265,16 @@ class PopUpAddItem extends Page {
           break;
         }
         await this.setInputMoreItems(firstName, lastName, email, age, salary, department);
+        // console.log(`-`)
+        console.log(item)
+        // console.log(`-`)
+        // console.log(firstName + ' ' + lastName + ' ' + email + ' ' + age + ' ' + salary  + ' ' + department )
         await browser.pause(500);
       }
     } catch (err) {
       throw err;
     }
   }
-
   async clickSubmit() {
     await this.click(await this.getSubmitBtn);
     // await browser.debug;
